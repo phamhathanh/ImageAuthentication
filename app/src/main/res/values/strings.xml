@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">ImageAuthentication</string>
+    <string name="app_name">Image Authentication</string>
+
+    <string name="login_title">Enter password</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
