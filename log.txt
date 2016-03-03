@@ -1,0 +1,5 @@
+-- Bugs:
+ + Buttons doesnt span vertically
+
+- v0.0.05
+ + Designed grid

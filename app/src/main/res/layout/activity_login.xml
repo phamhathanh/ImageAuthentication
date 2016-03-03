@@ -28,4 +28,133 @@
             android:text="@string/login_title"/>
 
     </android.support.v7.widget.Toolbar>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="5"
+        android:rowCount="6"
+        android:orientation="horizontal">
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+        <ImageButton
+            style="@style/ImageButton"
+            android:src="@mipmap/ic_launcher"/>
+
+    </GridLayout>
 </LinearLayout>
