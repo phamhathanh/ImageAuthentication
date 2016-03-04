@@ -23,12 +23,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,25 @@ public class LoginActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        setTagForChildren();
+    }
+
+    private void setTagForChildren()
+    {
+        ViewGroup gridLayout = (ViewGroup)findViewById(R.id.gridLayout);
+        int childCount = gridLayout.getChildCount();
+
+        for (int i = 0; i < childCount; i++)
+        {
+            View child = gridLayout.getChildAt(i);
+            child.setTag(i);
+        }
+    }
+
+    public void onClick(View view)
+    {
+        Toast.makeText(getApplicationContext(), "This is the #" + view.getTag() + " button." , Toast.LENGTH_SHORT).show();
     }
 }
 
