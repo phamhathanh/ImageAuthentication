@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="images">
+        <item>@drawable/android</item>
+        <item>@drawable/ball</item>
+        <item>@drawable/balloon</item>
+        <item>@drawable/cash</item>
+        <item>@drawable/chair</item>
+        <item>@drawable/chicken</item>
+        <item>@drawable/comb</item>
+        <item>@drawable/cup</item>
+        <item>@drawable/dice</item>
+        <item>@drawable/epic</item>
+        <item>@drawable/item</item>
+        <item>@drawable/key</item>
+        <item>@drawable/lipstick</item>
+        <item>@drawable/lock</item>
+        <item>@drawable/moon</item>
+        <item>@drawable/mushroom</item>
+        <item>@drawable/nazi</item>
+        <item>@drawable/pen</item>
+        <item>@drawable/pencil</item>
+        <item>@drawable/popsicle</item>
+        <item>@drawable/scissors</item>
+        <item>@drawable/sneaker</item>
+        <item>@drawable/sock</item>
+        <item>@drawable/spoon</item>
+        <item>@drawable/sun</item>
+        <item>@drawable/tools</item>
+        <item>@drawable/toothpaste</item>
+        <item>@drawable/tshirt</item>
+        <item>@drawable/umbrella</item>
+        <item>@drawable/wine</item>
+    </string-array>
+</resources>
