@@ -1,7 +1,6 @@
 package com.authpro.imageauthentication;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
@@ -29,24 +28,26 @@ public class LoginActivity extends Activity
 
     private void setTagForChildren()
     {
-        Resources resources = getResources();
+        final Resources resources = getResources();
 
-        int columnCountResID = R.integer.gridColumnCount,
+        final int columnCountResID = R.integer.gridColumnCount,
             rowCountResID = R.integer.gridRowCount,
             columnCount = resources.getInteger(columnCountResID),
             rowCount = resources.getInteger(rowCountResID);
 
-        ViewGroup gridLayout = (ViewGroup)findViewById(R.id.gridLayout);
-        int childCount = gridLayout.getChildCount();
-        assertTrue("childCount = " + childCount
-                        + ", columnCount = " + columnCount
-                        + ", rowCount = " + rowCount,
-                childCount == columnCount * rowCount);
+        final ViewGroup gridLayout = (ViewGroup)findViewById(R.id.gridLayout);
+        final int childCount = gridLayout.getChildCount();
+        assertTrue("childCount = " + childCount + ", columnCount = " + columnCount + ", rowCount = " + rowCount, childCount == columnCount * rowCount);
 
-        int screenWidth = getScreenWidth(),
-        // assuming vertical orientation
-            childWidth = screenWidth / columnCount;
-        // beware of calculation error
+        final int screenPixelWidth = getPixelScreenWidth();
+            // assuming vertical orientation
+
+        final DisplayMetrics metrics = resources.getDisplayMetrics();
+        final float density = metrics.density;
+
+        final int padding = (int)resources.getDimension(R.dimen.imagebutton_margin),
+            childWidth = screenPixelWidth / columnCount;// - (int)Math.ceil(2 * padding * density);
+            // beware of calculation error
 
         TypedArray images = null;
         try
@@ -54,16 +55,16 @@ public class LoginActivity extends Activity
             images = resources.obtainTypedArray(R.array.images);
 
             for (int i = 0; i < childCount; i++) {
-                View child = gridLayout.getChildAt(i);
+                final View child = gridLayout.getChildAt(i);
                 child.setTag(i);
 
-                int imageID = images.getResourceId(i, 0);
+                final int imageID = images.getResourceId(i, 0);
 
                 assertTrue(child instanceof ImageButton);
-                ImageButton imageButton = (ImageButton)child;
-                imageButton.setImageResource(imageID);
-                imageButton.setMaxWidth(childWidth);
-                imageButton.setMinimumHeight(childWidth);
+                final ImageButton imageButton = (ImageButton)child;
+                //imageButton.setImageResource(imageID);
+
+                //imageButton.setMaxWidth(childWidth);
             }
         }
         catch (Exception ex)
@@ -76,7 +77,7 @@ public class LoginActivity extends Activity
         }
     }
 
-    private int getScreenWidth()
+    private int getPixelScreenWidth()
     {
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -90,6 +91,16 @@ public class LoginActivity extends Activity
     public void onClick(View view)
     {
         Toast.makeText(getApplicationContext(), "This is the #" + view.getTag() + " button." , Toast.LENGTH_SHORT).show();
+    }
+
+    public void clear(View view)
+    {
+        Toast.makeText(getApplicationContext(), "Cleared." , Toast.LENGTH_SHORT).show();
+    }
+
+    public void enter(View view)
+    {
+        Toast.makeText(getApplicationContext(), "Entered." , Toast.LENGTH_SHORT).show();
     }
 }
 
