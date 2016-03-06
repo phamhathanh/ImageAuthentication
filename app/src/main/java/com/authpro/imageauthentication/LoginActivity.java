@@ -62,9 +62,9 @@ public class LoginActivity extends Activity
 
                 assertTrue(child instanceof ImageButton);
                 final ImageButton imageButton = (ImageButton)child;
-                //imageButton.setImageResource(imageID);
+                imageButton.setImageResource(imageID);
 
-                //imageButton.setMaxWidth(childWidth);
+                imageButton.setMaxWidth(childWidth);
             }
         }
         catch (Exception ex)
