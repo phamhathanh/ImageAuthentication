@@ -53,135 +53,174 @@
             android:onClick="enter"/>
     </LinearLayout>
 
-    <GridLayout
-        android:id="@+id/gridLayout"
+    <LinearLayout
+        android:id="@+id/grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@id/toolbar"
         android:layout_above="@id/actionButtons"
-        android:columnCount="@integer/gridColumnCount"
-        android:rowCount="@integer/gridRowCount"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
 
-        <ImageButton
-            style="@style/ImageButton"
-            android:src="@mipmap/ic_launcher"/>
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
 
-    </GridLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+
+            <ImageButton
+                style="@style/ImageButton"
+                android:src="@drawable/android"/>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
