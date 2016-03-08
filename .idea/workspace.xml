@@ -25,14 +25,13 @@
     <list default="true" id="abbf67fc-6e2c-4605-b99a-9837aea147f4" name="Default" comment="">
       <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\appcompat_v7_23_1_1.xml" afterPath="" />
       <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\design_23_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\play_services_appindexing_8_1_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\play_services_basement_8_1_0.xml" afterPath="" />
       <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\recyclerview_v7_23_1_1.xml" afterPath="" />
       <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\support_annotations_23_1_1.xml" afterPath="" />
       <change type="DELETED" beforePath="D:\Sources\Android\ImageAuthentication\.idea\libraries\support_v4_23_1_1.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ImageAuthentication.iws" />
@@ -74,22 +73,72 @@
       <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3309481">
-              <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+            <state vertical-scroll-proportion="1.334526">
+              <caret line="155" column="23" selection-start-line="155" selection-start-column="23" selection-end-line="155" selection-end-column="23" />
               <folding>
-                <element signature="e#1079#1104#0" expanded="true" />
-                <element signature="e#1134#1156#0" expanded="true" />
+                <element signature="e#1348#1373#0" expanded="true" />
+                <element signature="e#1403#1425#0" expanded="true" />
+                <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+                <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+                <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <file leaf-file-name="activity_login.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-6.0">
+              <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+              <folding>
+                <element signature="e#314#1128#0" expanded="false" />
+                <element signature="e#608#841#0" expanded="false" />
+                <element signature="e#851#1086#0" expanded="false" />
+                <element signature="e#1134#1898#0" expanded="false" />
+                <element signature="e#1376#1622#0" expanded="false" />
+                <element signature="e#1632#1878#0" expanded="false" />
+                <element signature="e#1904#2217#0" expanded="false" />
+                <element signature="e#2484#3288#0" expanded="false" />
+                <element signature="e#2683#2788#0" expanded="false" />
+                <element signature="e#2802#2907#0" expanded="false" />
+                <element signature="e#2921#3026#0" expanded="false" />
+                <element signature="e#3040#3145#0" expanded="false" />
+                <element signature="e#3159#3264#0" expanded="false" />
+                <element signature="e#3298#4102#0" expanded="false" />
+                <element signature="e#3497#3602#0" expanded="false" />
+                <element signature="e#3616#3721#0" expanded="false" />
+                <element signature="e#3735#3840#0" expanded="false" />
+                <element signature="e#3854#3959#0" expanded="false" />
+                <element signature="e#3973#4078#0" expanded="false" />
+                <element signature="e#4112#4916#0" expanded="false" />
+                <element signature="e#4311#4416#0" expanded="false" />
+                <element signature="e#4430#4535#0" expanded="false" />
+                <element signature="e#4549#4654#0" expanded="false" />
+                <element signature="e#4668#4773#0" expanded="false" />
+                <element signature="e#4787#4892#0" expanded="false" />
+                <element signature="e#4926#5730#0" expanded="false" />
+                <element signature="e#5125#5230#0" expanded="false" />
+                <element signature="e#5244#5349#0" expanded="false" />
+                <element signature="e#5363#5468#0" expanded="false" />
+                <element signature="e#5482#5587#0" expanded="false" />
+                <element signature="e#5601#5706#0" expanded="false" />
+                <element signature="e#5740#6544#0" expanded="false" />
+                <element signature="e#5939#6044#0" expanded="false" />
+                <element signature="e#6058#6163#0" expanded="false" />
+                <element signature="e#6177#6282#0" expanded="false" />
+                <element signature="e#6296#6401#0" expanded="false" />
+                <element signature="e#6415#6520#0" expanded="false" />
+                <element signature="e#6554#7358#0" expanded="false" />
+                <element signature="e#6753#6858#0" expanded="false" />
+                <element signature="e#6872#6977#0" expanded="false" />
+                <element signature="e#6991#7096#0" expanded="false" />
+                <element signature="e#7110#7215#0" expanded="false" />
+                <element signature="e#7229#7334#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1848,9 +1897,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1948,10 +1996,6 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1978,9 +2022,14 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2215,7 +2264,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49394855" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4334342" order="7" side_tool="false" content_ui="tabs" />
@@ -2225,7 +2274,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60988075" sideWeight="0.5204236" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60988075" sideWeight="0.4795764" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41396934" sideWeight="0.4795764" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22390318" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49092284" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.3260212" order="2" side_tool="false" content_ui="tabs" />
@@ -2234,8 +2283,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2473525" sideWeight="0.48984772" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2473525" sideWeight="0.48984772" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2247,6 +2295,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2294,27 +2343,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/consts.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -2384,8 +2417,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2459,8 +2495,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2546,8 +2585,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2633,8 +2675,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2712,8 +2757,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="67" column="56" selection-start-line="67" selection-start-column="44" selection-end-line="67" selection-end-column="56" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2834,7 +2882,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15044248">
           <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2858,6 +2905,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38505748">
           <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/widget/Toast.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="16" selection-start-line="132" selection-start-column="16" selection-end-line="132" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6666665">
+          <caret line="9" column="64" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
           <folding />
         </state>
       </provider>
@@ -2867,11 +2937,16 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6471698">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+        <state vertical-scroll-proportion="-6.0">
+          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
           <folding>
-            <element signature="e#1063#1084#0" expanded="true" />
-            <element signature="e#2223#7378#0" expanded="false" />
+            <element signature="e#314#1128#0" expanded="false" />
+            <element signature="e#608#841#0" expanded="false" />
+            <element signature="e#851#1086#0" expanded="false" />
+            <element signature="e#1134#1898#0" expanded="false" />
+            <element signature="e#1376#1622#0" expanded="false" />
+            <element signature="e#1632#1878#0" expanded="false" />
+            <element signature="e#1904#2217#0" expanded="false" />
             <element signature="e#2484#3288#0" expanded="false" />
             <element signature="e#2683#2788#0" expanded="false" />
             <element signature="e#2802#2907#0" expanded="false" />
@@ -2896,11 +2971,13 @@
             <element signature="e#5363#5468#0" expanded="false" />
             <element signature="e#5482#5587#0" expanded="false" />
             <element signature="e#5601#5706#0" expanded="false" />
+            <element signature="e#5740#6544#0" expanded="false" />
             <element signature="e#5939#6044#0" expanded="false" />
             <element signature="e#6058#6163#0" expanded="false" />
             <element signature="e#6177#6282#0" expanded="false" />
             <element signature="e#6296#6401#0" expanded="false" />
             <element signature="e#6415#6520#0" expanded="false" />
+            <element signature="e#6554#7358#0" expanded="false" />
             <element signature="e#6753#6858#0" expanded="false" />
             <element signature="e#6872#6977#0" expanded="false" />
             <element signature="e#6991#7096#0" expanded="false" />
@@ -2910,29 +2987,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6666665">
-          <caret line="9" column="64" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.33273703">
+          <caret line="21232" column="16" selection-start-line="21232" selection-start-column="16" selection-end-line="21232" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3309481">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.334526">
+          <caret line="155" column="23" selection-start-line="155" selection-start-column="23" selection-end-line="155" selection-end-column="23" />
           <folding>
-            <element signature="e#1079#1104#0" expanded="true" />
-            <element signature="e#1134#1156#0" expanded="true" />
+            <element signature="e#1348#1373#0" expanded="true" />
+            <element signature="e#1403#1425#0" expanded="true" />
+            <element signature="method#clear#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
