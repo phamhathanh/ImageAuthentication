@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ public class LoginActivity extends Activity
 
     private final ArrayList<Integer> correctInput = new ArrayList<>(Arrays.asList(0, 31, 62, 93, 124));
 
-    private Integer heldButtonIndex = null;
+    private View initialButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,13 +38,12 @@ public class LoginActivity extends Activity
         setContentView(R.layout.activity_login);
 
         textView = (TextView)findViewById(R.id.textView);
-        setupImages();
-        setOnTouchEventListener();
+        setupButtons();
 
         toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     }
 
-    private void setupImages()
+    private void setupButtons()
     {
         final Resources resources = getResources();
 
@@ -80,35 +80,30 @@ public class LoginActivity extends Activity
                     throw new IndexOutOfBoundsException("Index is outside of resources array range.");
                 imageButton.setTag(index);
                 imageButton.setImageResource(imageID);
+
+                setupForDragEvent(cell);
             }
         }
     }
 
-    private void setOnTouchEventListener()
+    private void setupForDragEvent(View view)
     {
-        Resources resources = getResources();
-        LinearLayout rows = (LinearLayout)findViewById(R.id.rows);
-
-        rows.setOnTouchListener(new View.OnTouchListener()
+        view.setOnTouchListener(new View.OnTouchListener()
         {
             @Override
             public boolean onTouch(View v, MotionEvent event)
             {
                 assertTrue(v instanceof ImageButton);
 
-                int actionCode = event.getAction() & MotionEvent.ACTION_MASK;
-                switch (actionCode)
+                int action = event.getAction() & MotionEvent.ACTION_MASK;
+                switch (action)
                 {
                     case MotionEvent.ACTION_DOWN:
-                        swipeStart(v);
+                        assertNull(initialButton);
+                        initialButton = v;
+                        View.DragShadowBuilder shadow = new View.DragShadowBuilder();
+                        v.startDrag(null, shadow, null, 0);
                         break;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        swipeEnd(v);
-                        break;
-                    case MotionEvent.ACTION_HOVER_EXIT:
-                    case MotionEvent.ACTION_OUTSIDE:
-                        // No need to release.
                     default:
                         // Don't care.
                         break;
@@ -116,25 +111,64 @@ public class LoginActivity extends Activity
                 return true;
             }
         });
-    }
 
-    private void swipeStart(View view)
-    {
-        assertNull(heldButtonIndex);
+        /*
+        view.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            public boolean onLongClick(View v)
+            {
+                assertNull(initialButton);
+                initialButton = v;
 
-        int index = (int)view.getTag();
-        heldButtonIndex = index;
-        view.setPressed(true);
-    }
+                View.DragShadowBuilder shadow = new View.DragShadowBuilder();
+                v.startDrag(null, shadow, null, 0);
+                return true;
+            }
+        });
+        */
 
-    private void swipeEnd(View view)
-    {
-        assertNotNull(heldButtonIndex);
+        view.setOnDragListener(new View.OnDragListener()
+        {
+            @Override
+            public boolean onDrag(View v, DragEvent event)
+            {
+                int action = event.getAction();
+                switch (action)
+                {
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        break;
+                    case DragEvent.ACTION_DRAG_ENTERED:
+                        v.setPressed(true);
+                        break;
+                    case DragEvent.ACTION_DRAG_EXITED:
+                        if (v != initialButton)
+                            v.setPressed(false);
+                        break;
+                    case DragEvent.ACTION_DROP:
+                        assertNotNull(initialButton);
 
-        int releaseButtonIndex = (int)view.getTag();
-        addInput(heldButtonIndex, releaseButtonIndex);
-        heldButtonIndex = null;
-        view.setPressed(false);
+                        toast.setText(initialButton.getTag() + " " + v.getTag());
+                        toast.show();
+
+                        v.setPressed(false);
+                        initialButton.setPressed(false);
+                        initialButton = null;
+                        break;
+                    case DragEvent.ACTION_DRAG_ENDED:
+                        boolean success = event.getResult();
+                        if (success || initialButton == null)
+                            break;
+                        if (v == initialButton)
+                        {
+                            v.setPressed(false);
+                            initialButton = null;
+                        }
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     private void addInput(int firstIndex, int secondIndex)

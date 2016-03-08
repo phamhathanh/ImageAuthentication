@@ -19,6 +19,6 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:contentDescription">@null</item>
         <!--<item name="android:padding">@dimen/imagebutton_margin</item>-->
-        <item name="android:onClick">"onClick"</item>
+        <!--<<item name="android:onClick">"onClick"</item>-->
     </style>
 </resources>
