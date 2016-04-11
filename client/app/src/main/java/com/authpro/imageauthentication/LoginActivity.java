@@ -34,8 +34,6 @@ public class LoginActivity extends Activity
     private final ArrayList<Integer> correctInput = new ArrayList<>(Arrays.asList(0, 31, 62, 93, 124));
 
     private View initialButton = null;
-    private PointF originalLocation = null,
-                    lastLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,8 +45,6 @@ public class LoginActivity extends Activity
         setupButtons();
 
         toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
-
-        setupCanvasLineDrawing();
     }
 
     private void setupButtons()
@@ -119,37 +115,29 @@ public class LoginActivity extends Activity
                         break;
                 }
 
-                return false;
+                return true;
             }
         });
 
         view.setOnDragListener(new View.OnDragListener()
         {
             @Override
-            public boolean onDrag(final View v, DragEvent event)
+            public boolean onDrag(View v, DragEvent event)
             {
-
-                final Handler handler = new Handler();
-                final Runnable dragHeld = new Runnable()
-                {
-                    public void run()
-                    {
-                        v.setPressed(true);
-                    }
-                };
 
                 int action = event.getAction();
                 switch (action)
                 {
                     case DragEvent.ACTION_DRAG_ENTERED:
-                        handler.postDelayed(dragHeld, 1000);
+                        if (v != initialButton)
+                            v.setPressed(true);
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
-                        handler.removeCallbacks(dragHeld);
+                        if (v != initialButton)
+                            v.setPressed(false);
                         break;
                     case DragEvent.ACTION_DROP:
                         assertNotNull(initialButton);
-                        //handler.removeCallbacks(dragHeld);
 
                         int firstIndex = (int) initialButton.getTag(),
                             secondIndex = (int) v.getTag();
@@ -159,13 +147,15 @@ public class LoginActivity extends Activity
                         toast.show();
 
                         v.setPressed(false);
+
                         initialButton.setPressed(false);
                         initialButton = null;
 
                         v.playSoundEffect(SoundEffectConstants.CLICK);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        if ((initialButton != null) && (v == initialButton))
+                        boolean success = event.getResult();
+                        if (!success && (v == initialButton))
                         {
                             v.setPressed(false);
                             initialButton = null;
@@ -185,43 +175,6 @@ public class LoginActivity extends Activity
 
         textView.append("*");
         assertEquals(textView.length(), input.size());
-    }
-
-    private void setupCanvasLineDrawing()
-    {
-        View grid = findViewById(R.id.rows);
-        grid.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                assertTrue(v instanceof LinearLayout);
-
-                int action = event.getAction() & MotionEvent.ACTION_MASK;
-                switch (action)
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        assertNull(originalLocation);
-                        originalLocation = new PointF(event.getX(), event.getY());
-                        assertNull(lastLocation);
-                        lastLocation = new PointF(event.getX(), event.getY());
-                    case MotionEvent.ACTION_MOVE:
-                        if (initialButton == null)
-                            break;
-                        final PointF newLocation = new PointF(event.getX(), event.getY());
-                        final float squareDistance =  (newLocation.x - lastLocation.x) * (newLocation.x - lastLocation.x)
-                                + (newLocation.y - lastLocation.y) * (newLocation.y - lastLocation.y),
-                            squareThreshold = 9;
-                        if (squareDistance < squareThreshold)
-                            break;
-                        lastLocation = newLocation;
-                        break;
-                    default:
-                        return false;
-                }
-                return true;
-            }
-        });
     }
 
     public void clear(View view)
