@@ -104,6 +104,7 @@ public class LoginActivity extends Activity
                 {
                     case MotionEvent.ACTION_DOWN:
                         assertNull(initialButton);
+                        // TODO: Fix the bug when this is not null sometimes.
                         initialButton = v;
                         View.DragShadowBuilder shadow = new View.DragShadowBuilder();
                         v.startDrag(null, shadow, null, 0);
@@ -147,17 +148,12 @@ public class LoginActivity extends Activity
                         toast.show();
 
                         v.setPressed(false);
-
-                        initialButton.setPressed(false);
-                        initialButton = null;
-
                         v.playSoundEffect(SoundEffectConstants.CLICK);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        boolean success = event.getResult();
-                        if (!success && (v == initialButton))
+                        if (v == initialButton)
                         {
-                            v.setPressed(false);
+                            initialButton.setPressed(false);
                             initialButton = null;
                         }
                         break;
