@@ -122,11 +122,11 @@ namespace ImageAuthentication.Controllers
             return DeviceExists(deviceID);
         }
 
-        [Route("/api/devices/{deviceID}/{passwordHashString}")]
+        [Route("api/devices/{deviceID}/{passwordHashString}")]
         [HttpGet]
         public bool VerifyPassword(long deviceID, string passwordHashString)
         {
-            if (passwordHashString.Length != 32)
+            if (passwordHashString.Length != 64)
                 throw new FormatException("Hash value is in incorrect format.");
 
             var passwordHash = Enumerable.Range(0, passwordHashString.Length)
