@@ -24,33 +24,12 @@ namespace ImageAuthentication.Tests
         }
 
         [TestMethod]
-        public async Task GetAllDevicesAsync_ShouldReturnAllDevices()
-        {
-            var testDevices = GetTestDevices();
-            var controller = new DeviceController(testDevices);
-
-            var result = await controller.GetAllDevicesAsync() as List<Device>;
-            Assert.AreEqual(testDevices.Count, result.Count);
-        }
-
-        [TestMethod]
         public void GetDevice_ShouldReturnCorrectDevice()
         {
             var testDevices = GetTestDevices();
             var controller = new DeviceController(testDevices);
 
             var result = controller.GetDevice(4) as OkNegotiatedContentResult<Device>;
-            Assert.IsNotNull(result);
-            Assert.AreEqual(testDevices[3].PasswordHash, result.Content.PasswordHash);
-        }
-
-        [TestMethod]
-        public async Task GetDeviceAsync_ShouldReturnCorrectDevice()
-        {
-            var testDevices = GetTestDevices();
-            var controller = new DeviceController(testDevices);
-
-            var result = await controller.GetDeviceAsync(4) as OkNegotiatedContentResult<Device>;
             Assert.IsNotNull(result);
             Assert.AreEqual(testDevices[3].PasswordHash, result.Content.PasswordHash);
         }
