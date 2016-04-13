@@ -6,14 +6,14 @@ namespace ImageAuthentication.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Models.ImageAuthenticationContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ImageAuthenticationContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Models.ImageAuthenticationContext context)
+        protected override void Seed(ImageAuthenticationContext context)
         {
             context.Devices.AddOrUpdate(x => x.ID,
                 new Device()

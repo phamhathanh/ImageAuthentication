@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ImageAuthentication.Models;
+using System.Diagnostics;
 
 namespace ImageAuthentication.Controllers
 {
@@ -111,9 +112,46 @@ namespace ImageAuthentication.Controllers
             base.Dispose(disposing);
         }
 
-        private bool DeviceExists(long id)
+        private bool DeviceExists(long deviceID)
         {
-            return db.Devices.Count(e => e.DeviceID == id) > 0;
+            return db.Devices.Count(e => e.DeviceID == deviceID) > 0;
+        }
+
+        public bool CheckExistence(long deviceID)
+        {
+            return DeviceExists(deviceID);
+        }
+
+        [Route("/api/devices/{deviceID}/{passwordHashString}")]
+        [HttpGet]
+        public bool VerifyPassword(long deviceID, string passwordHashString)
+        {
+            if (passwordHashString.Length != 32)
+                throw new FormatException("Hash value is in incorrect format.");
+
+            var passwordHash = Enumerable.Range(0, passwordHashString.Length)
+                     .Where(x => x % 2 == 0)
+                     .Select(x => Convert.ToByte(passwordHashString.Substring(x, 2), 16))
+                     .ToArray();
+
+            var hits = from device in db.Devices
+                       where device.DeviceID == deviceID
+                       select device;
+
+            bool deviceExists = hits.Count() != 0;
+            if (!deviceExists)
+                return false;
+
+            if (hits.Count() != 1)
+                throw new DataException("Device ID must be unique.");
+
+            var correctHash = hits.First().PasswordHash;
+
+            for (int i = 0; i < 32; i++)
+                if (correctHash[i] != passwordHash[i])
+                    return false;
+
+            return true;
         }
     }
 }
