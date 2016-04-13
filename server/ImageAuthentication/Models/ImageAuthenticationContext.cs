@@ -19,6 +19,6 @@ namespace ImageAuthentication.Models
         {
         }
 
-        public System.Data.Entity.DbSet<ImageAuthentication.Models.Device> Devices { get; set; }
+        public DbSet<Device> Devices { get; set; }
     }
 }
