@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ImageAuthentication.Models
 {
@@ -9,6 +10,7 @@ namespace ImageAuthentication.Models
     {
         public int ID { get; set; }
         [Required]
+        [Index("UK_Devices", IsUnique = true)]
         public long DeviceID { get; set; }
         public byte[] PasswordHash { get; set; }
     }

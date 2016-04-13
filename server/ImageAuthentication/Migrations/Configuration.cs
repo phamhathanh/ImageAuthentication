@@ -1,5 +1,6 @@
 namespace ImageAuthentication.Migrations
 {
+    using Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,18 +15,18 @@ namespace ImageAuthentication.Migrations
 
         protected override void Seed(Models.ImageAuthenticationContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Devices.AddOrUpdate(x => x.ID,
+                new Device()
+                {
+                    DeviceID = 1,
+                    PasswordHash = Hasher.ComputeHash("1")
+                },
+                new Device()
+                {
+                    DeviceID = 2,
+                    PasswordHash = Hasher.ComputeHash("2")
+                }
+                );
         }
     }
 }
