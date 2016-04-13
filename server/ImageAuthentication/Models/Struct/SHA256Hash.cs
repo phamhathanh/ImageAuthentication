@@ -9,29 +9,42 @@ namespace ImageAuthentication.Models
 {
     public struct SHA256Hash
     {
-        private readonly byte[] bytes;
+        private readonly long part0, part1, part2, part3;
 
         public SHA256Hash(byte[] bytes)
         {
             if (bytes.Length != 32)
                 throw new ArgumentException("Byte array must be exactly 32 bytes.");
 
-            this.bytes = (byte[])bytes.Clone();
+            part0 = BitConverter.ToInt64(bytes, 0);
+            part1 = BitConverter.ToInt64(bytes, 8);
+            part2 = BitConverter.ToInt64(bytes, 16);
+            part3 = BitConverter.ToInt64(bytes, 24);
         }
 
         public SHA256Hash(string input)
         {
             var hasher = SHA256.Create();
             var rawBytes = Encoding.Unicode.GetBytes(input);
-            this.bytes = hasher.ComputeHash(rawBytes);
+            var bytes = hasher.ComputeHash(rawBytes);
             Debug.Assert(bytes.Length == 32);
+
+            part0 = BitConverter.ToInt64(bytes, 0);
+            part1 = BitConverter.ToInt64(bytes, 8);
+            part2 = BitConverter.ToInt64(bytes, 16);
+            part3 = BitConverter.ToInt64(bytes, 24);
         }
 
         public static bool operator ==(SHA256Hash hash1, SHA256Hash hash2)
         {
-            for (int i = 0; i < 32; i++)
-                if (hash1.bytes[i] != hash2.bytes[i])
-                    return false;
+            if (hash1.part0 != hash2.part0)
+                return false;
+            if (hash1.part1 != hash2.part1)
+                return false;
+            if (hash1.part2 != hash2.part2)
+                return false;
+            if (hash1.part3 != hash2.part3)
+                return false;
 
             return true;
         }
@@ -48,15 +61,18 @@ namespace ImageAuthentication.Models
 
         public override int GetHashCode()
         {
-            int hash = bytes.Length;
-            foreach (var item in bytes)
-                hash = unchecked(hash * 314159 + item);
+            int hash = 17;
+            hash = hash * 29 + part0.GetHashCode();
+            hash = hash * 29 + part1.GetHashCode();
+            hash = hash * 29 + part2.GetHashCode();
+            hash = hash * 29 + part3.GetHashCode();
             return hash;
         }
 
         public override string ToString()
         {
-            return BitConverter.ToString(bytes);
+            return part0.ToString("X8") + part1.ToString("X8") 
+                + part2.ToString("X8") + part3.ToString("X8");
         }
     }
 }
