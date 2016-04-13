@@ -46,10 +46,10 @@ namespace ImageAuthentication.Tests
         private List<Device> GetTestDevices()
         {
             var testDevices = new List<Device>();
-            testDevices.Add(new Device { DeviceID = 1, PasswordHash = 1 });
-            testDevices.Add(new Device { DeviceID = 2, PasswordHash = 2 });
-            testDevices.Add(new Device { DeviceID = 3, PasswordHash = 3 });
-            testDevices.Add(new Device { DeviceID = 4, PasswordHash = 4 });
+            testDevices.Add(new Device { DeviceID = 1, PasswordHash = new SHA256Hash() });
+            testDevices.Add(new Device { DeviceID = 2, PasswordHash = new SHA256Hash() });
+            testDevices.Add(new Device { DeviceID = 3, PasswordHash = new SHA256Hash() });
+            testDevices.Add(new Device { DeviceID = 4, PasswordHash = new SHA256Hash() });
 
             return testDevices;
         }

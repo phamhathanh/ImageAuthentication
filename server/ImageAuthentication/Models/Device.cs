@@ -7,7 +7,7 @@ namespace ImageAuthentication.Models
 {
     public class Device
     {
-        public short DeviceID { get; set; }
-        public int PasswordHash { get; set; }
+        public long DeviceID { get; set; }
+        public SHA256Hash PasswordHash { get; set; }
     }
 }
