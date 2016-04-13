@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import static junit.framework.Assert.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -141,7 +143,7 @@ public class LoginActivity extends Activity
                         assertNotNull(initialButton);
 
                         int firstIndex = (int) initialButton.getTag(),
-                            secondIndex = (int) v.getTag();
+                                secondIndex = (int) v.getTag();
                         addInput(firstIndex, secondIndex);
 
                         toast.setText(initialButton.getTag() + " - " + v.getTag());
@@ -185,6 +187,17 @@ public class LoginActivity extends Activity
 
     public void enter(View view)
     {
+        try
+        {
+            URL url = new URL("192.168.1.102:52247/api/device/");
+            AuthenticationTask task = new AuthenticationTask(this);
+            task.execute(url);
+        }
+        catch (MalformedURLException exception)
+        {
+            // Lol no such thing.
+        }
+
         String result;
         if (matches())
             result = "Success!";

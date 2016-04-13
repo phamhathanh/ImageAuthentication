@@ -10,9 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fd31dac-2384-4839-9ac0-13bc56f5a5a3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/AuthenticationTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="client.iws" />
@@ -41,75 +41,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.706619">
-              <caret line="113" column="46" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="187" column="21" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="21" />
+              <folding>
+                <element signature="method#onCreate#0;class#LoginActivity#0" expanded="false" />
+                <element signature="method#setupButtons#0;class#LoginActivity#0" expanded="false" />
+                <element signature="method#setupForDragEvent#0;class#LoginActivity#0" expanded="false" />
+                <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthenticationTask.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/AuthenticationTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8783542">
+              <caret line="80" column="42" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1732#1733#0" expanded="true" />
+                <element signature="e#1758#1759#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InputStream.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/java/io/InputStream.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="160" column="15" selection-start-line="160" selection-start-column="15" selection-end-line="160" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_login.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.1034484">
-              <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
-              <folding>
-                <element signature="e#314#1128#0" expanded="false" />
-                <element signature="e#608#841#0" expanded="false" />
-                <element signature="e#851#1086#0" expanded="false" />
-                <element signature="e#1134#1898#0" expanded="false" />
-                <element signature="e#1376#1622#0" expanded="false" />
-                <element signature="e#1632#1878#0" expanded="false" />
-                <element signature="e#1904#2217#0" expanded="false" />
-                <element signature="e#2223#7378#0" expanded="false" />
-                <element signature="e#2484#3288#0" expanded="false" />
-                <element signature="e#2683#2788#0" expanded="false" />
-                <element signature="e#2802#2907#0" expanded="false" />
-                <element signature="e#2921#3026#0" expanded="false" />
-                <element signature="e#3040#3145#0" expanded="false" />
-                <element signature="e#3159#3264#0" expanded="false" />
-                <element signature="e#3298#4102#0" expanded="false" />
-                <element signature="e#3497#3602#0" expanded="false" />
-                <element signature="e#3616#3721#0" expanded="false" />
-                <element signature="e#3735#3840#0" expanded="false" />
-                <element signature="e#3854#3959#0" expanded="false" />
-                <element signature="e#3973#4078#0" expanded="false" />
-                <element signature="e#4112#4916#0" expanded="false" />
-                <element signature="e#4311#4416#0" expanded="false" />
-                <element signature="e#4430#4535#0" expanded="false" />
-                <element signature="e#4549#4654#0" expanded="false" />
-                <element signature="e#4668#4773#0" expanded="false" />
-                <element signature="e#4787#4892#0" expanded="false" />
-                <element signature="e#4926#5730#0" expanded="false" />
-                <element signature="e#5125#5230#0" expanded="false" />
-                <element signature="e#5244#5349#0" expanded="false" />
-                <element signature="e#5363#5468#0" expanded="false" />
-                <element signature="e#5482#5587#0" expanded="false" />
-                <element signature="e#5601#5706#0" expanded="false" />
-                <element signature="e#5740#6544#0" expanded="false" />
-                <element signature="e#5939#6044#0" expanded="false" />
-                <element signature="e#6058#6163#0" expanded="false" />
-                <element signature="e#6177#6282#0" expanded="false" />
-                <element signature="e#6296#6401#0" expanded="false" />
-                <element signature="e#6415#6520#0" expanded="false" />
-                <element signature="e#6554#7358#0" expanded="false" />
-                <element signature="e#6753#6858#0" expanded="false" />
-                <element signature="e#6872#6977#0" expanded="false" />
-                <element signature="e#6991#7096#0" expanded="false" />
-                <element signature="e#7110#7215#0" expanded="false" />
-                <element signature="e#7229#7334#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -1669,7 +1647,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/AuthenticationTask.java" />
       </list>
     </option>
   </component>
@@ -1679,7 +1660,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -1705,10 +1686,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1726,9 +1703,67 @@
               <option name="myItemId" value="client" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="imageauthentication" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1757,6 +1792,26 @@
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1797,6 +1852,11 @@
         <option name="Make" enabled="false" />
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -1885,11 +1945,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1897,7 +1957,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928678" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1905,8 +1965,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962063" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1918,6 +1977,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1932,7 +1992,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="3" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -1940,23 +2002,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/android/view/DragEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89071035">
-          <caret line="218" column="28" selection-start-line="218" selection-start-column="28" selection-end-line="218" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="method#onCreate#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupButtons#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupForDragEvent#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1034484">
+        <state vertical-scroll-proportion="0.0">
           <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
           <folding>
+            <element signature="e#0#7396#0" expanded="false" />
             <element signature="e#314#1128#0" expanded="false" />
             <element signature="e#608#841#0" expanded="false" />
             <element signature="e#851#1086#0" expanded="false" />
@@ -2010,9 +2070,219 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.706619">
-          <caret line="113" column="46" selection-start-line="113" selection-start-column="37" selection-end-line="113" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onCreate#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupButtons#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupForDragEvent#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#7396#0" expanded="false" />
+            <element signature="e#314#1128#0" expanded="false" />
+            <element signature="e#608#841#0" expanded="false" />
+            <element signature="e#851#1086#0" expanded="false" />
+            <element signature="e#1134#1898#0" expanded="false" />
+            <element signature="e#1376#1622#0" expanded="false" />
+            <element signature="e#1632#1878#0" expanded="false" />
+            <element signature="e#1904#2217#0" expanded="false" />
+            <element signature="e#2223#7378#0" expanded="false" />
+            <element signature="e#2484#3288#0" expanded="false" />
+            <element signature="e#2683#2788#0" expanded="false" />
+            <element signature="e#2802#2907#0" expanded="false" />
+            <element signature="e#2921#3026#0" expanded="false" />
+            <element signature="e#3040#3145#0" expanded="false" />
+            <element signature="e#3159#3264#0" expanded="false" />
+            <element signature="e#3298#4102#0" expanded="false" />
+            <element signature="e#3497#3602#0" expanded="false" />
+            <element signature="e#3616#3721#0" expanded="false" />
+            <element signature="e#3735#3840#0" expanded="false" />
+            <element signature="e#3854#3959#0" expanded="false" />
+            <element signature="e#3973#4078#0" expanded="false" />
+            <element signature="e#4112#4916#0" expanded="false" />
+            <element signature="e#4311#4416#0" expanded="false" />
+            <element signature="e#4430#4535#0" expanded="false" />
+            <element signature="e#4549#4654#0" expanded="false" />
+            <element signature="e#4668#4773#0" expanded="false" />
+            <element signature="e#4787#4892#0" expanded="false" />
+            <element signature="e#4926#5730#0" expanded="false" />
+            <element signature="e#5125#5230#0" expanded="false" />
+            <element signature="e#5244#5349#0" expanded="false" />
+            <element signature="e#5363#5468#0" expanded="false" />
+            <element signature="e#5482#5587#0" expanded="false" />
+            <element signature="e#5601#5706#0" expanded="false" />
+            <element signature="e#5740#6544#0" expanded="false" />
+            <element signature="e#5939#6044#0" expanded="false" />
+            <element signature="e#6058#6163#0" expanded="false" />
+            <element signature="e#6177#6282#0" expanded="false" />
+            <element signature="e#6296#6401#0" expanded="false" />
+            <element signature="e#6415#6520#0" expanded="false" />
+            <element signature="e#6554#7358#0" expanded="false" />
+            <element signature="e#6753#6858#0" expanded="false" />
+            <element signature="e#6872#6977#0" expanded="false" />
+            <element signature="e#6991#7096#0" expanded="false" />
+            <element signature="e#7110#7215#0" expanded="false" />
+            <element signature="e#7229#7334#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="method#onCreate#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupButtons#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupForDragEvent#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/android/view/DragEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.89071035">
+          <caret line="218" column="28" selection-start-line="218" selection-start-column="28" selection-end-line="218" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15205725">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding>
+            <element signature="e#340#358#0" expanded="true" />
+            <element signature="e#521#539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/java/lang/Throwable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5223613">
+          <caret line="186" column="18" selection-start-line="186" selection-start-column="18" selection-end-line="186" selection-end-column="18" />
+          <folding>
+            <element signature="e#7121#7122#0" expanded="true" />
+            <element signature="e#7156#7157#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/java/net/URL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33273703">
+          <caret line="123" column="11" selection-start-line="123" selection-start-column="11" selection-end-line="123" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/android/os/AsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.9856887">
+          <caret line="179" column="48" selection-start-line="179" selection-start-column="40" selection-end-line="179" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="74" selection-start-line="0" selection-start-column="74" selection-end-line="0" selection-end-column="74" />
+          <folding>
+            <element signature="e#0#7396#0" expanded="false" />
+            <element signature="e#314#1128#0" expanded="false" />
+            <element signature="e#608#841#0" expanded="false" />
+            <element signature="e#851#1086#0" expanded="false" />
+            <element signature="e#1134#1898#0" expanded="false" />
+            <element signature="e#1376#1622#0" expanded="false" />
+            <element signature="e#1632#1878#0" expanded="false" />
+            <element signature="e#1904#2217#0" expanded="false" />
+            <element signature="e#2223#7378#0" expanded="false" />
+            <element signature="e#2484#3288#0" expanded="false" />
+            <element signature="e#2683#2788#0" expanded="false" />
+            <element signature="e#2802#2907#0" expanded="false" />
+            <element signature="e#2921#3026#0" expanded="false" />
+            <element signature="e#3040#3145#0" expanded="false" />
+            <element signature="e#3159#3264#0" expanded="false" />
+            <element signature="e#3298#4102#0" expanded="false" />
+            <element signature="e#3497#3602#0" expanded="false" />
+            <element signature="e#3616#3721#0" expanded="false" />
+            <element signature="e#3735#3840#0" expanded="false" />
+            <element signature="e#3854#3959#0" expanded="false" />
+            <element signature="e#3973#4078#0" expanded="false" />
+            <element signature="e#4112#4916#0" expanded="false" />
+            <element signature="e#4311#4416#0" expanded="false" />
+            <element signature="e#4430#4535#0" expanded="false" />
+            <element signature="e#4549#4654#0" expanded="false" />
+            <element signature="e#4668#4773#0" expanded="false" />
+            <element signature="e#4787#4892#0" expanded="false" />
+            <element signature="e#4926#5730#0" expanded="false" />
+            <element signature="e#5125#5230#0" expanded="false" />
+            <element signature="e#5244#5349#0" expanded="false" />
+            <element signature="e#5363#5468#0" expanded="false" />
+            <element signature="e#5482#5587#0" expanded="false" />
+            <element signature="e#5601#5706#0" expanded="false" />
+            <element signature="e#5740#6544#0" expanded="false" />
+            <element signature="e#5939#6044#0" expanded="false" />
+            <element signature="e#6058#6163#0" expanded="false" />
+            <element signature="e#6177#6282#0" expanded="false" />
+            <element signature="e#6296#6401#0" expanded="false" />
+            <element signature="e#6415#6520#0" expanded="false" />
+            <element signature="e#6554#7358#0" expanded="false" />
+            <element signature="e#6753#6858#0" expanded="false" />
+            <element signature="e#6872#6977#0" expanded="false" />
+            <element signature="e#6991#7096#0" expanded="false" />
+            <element signature="e#7110#7215#0" expanded="false" />
+            <element signature="e#7229#7334#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/android-sdk/sources/android-23/java/io/InputStream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="160" column="15" selection-start-line="160" selection-start-column="15" selection-end-line="160" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="187" column="21" selection-start-line="187" selection-start-column="16" selection-end-line="187" selection-end-column="21" />
+          <folding>
+            <element signature="method#onCreate#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupButtons#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#setupForDragEvent#0;class#LoginActivity#0" expanded="false" />
+            <element signature="method#matches#0;class#LoginActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/AuthenticationTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8783542">
+          <caret line="80" column="42" selection-start-line="80" selection-start-column="42" selection-end-line="80" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1732#1733#0" expanded="true" />
+            <element signature="e#1758#1759#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
