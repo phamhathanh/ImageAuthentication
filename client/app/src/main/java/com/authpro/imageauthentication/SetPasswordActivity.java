@@ -1,6 +1,9 @@
 package com.authpro.imageauthentication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -14,14 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
-public class LoginActivity extends Activity implements ICallbackable<HttpResult>
+public class SetPasswordActivity extends Activity implements ICallbackable<HttpResult>
 {
     private final int alphabetCount = 30;
 
@@ -184,13 +193,22 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
     {
         String deviceID = "1",
             password = getInputString(),
-            passwordHash = "E79E418E48623569D75E2A7B09AE88ED9B77B126A445B9FF9DC6989A08EFA079",
-            urlString = "http://192.168.43.149:52247/api/devices/" + deviceID + "/" + passwordHash;
+            urlString, passwordHash;
+        try
+        {
+            passwordHash = computeHash(password);
+        }
+        catch (NoSuchAlgorithmException | UnsupportedEncodingException exception)
+        {
+            throw new RuntimeException();
+        }
+
+        urlString = "http://192.168.43.149:52247/api/set/" + deviceID + "/" + passwordHash;
 
         try
         {
             URL url = new URL(urlString);
-            HttpVerificationTask task = new HttpVerificationTask(this, HttpVerificationTask.Method.GET);
+            HttpVerificationTask task = new HttpVerificationTask(this, HttpVerificationTask.Method.PUT);
             task.execute(url);
         }
         catch (MalformedURLException exception)
@@ -199,26 +217,73 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
         }
     }
 
+    private String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException
+    {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.reset();
+
+        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < byteData.length; i++)
+            builder.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        return builder.toString();
+    }
+
     public void callback(HttpResult result)
     {
-        String message;
         switch (result)
         {
             case TRUE:
-                message = "Success!";
+                // Set password successfully.
+                String message = "Password set.";
+                toast.setText(message);
+                toast.show();
+
+                if (activityStartedForResult())
+                {
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_OK, returnIntent);
+                }
+                finish();
                 break;
             case FALSE:
-                message = "Password mismatched.";
-                break;
+                // Server is responding, but password setting failed.
             case ERROR:
-                message = "Connection error.";
+                // Connection error.
+                showErrorDialog();
                 break;
             default:
                 throw new RuntimeException("Something is wrong with the source code.");
         }
+    }
 
-        toast.setText(message);
-        toast.show();
+    private boolean activityStartedForResult()
+    {
+        return getCallingActivity() != null;
+    }
+
+    private void showErrorDialog()
+    {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Connection error");
+        errorDialog.setMessage("An error with the connection has occurred.");
+        errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+
+                if (activityStartedForResult())
+                {
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_OK, returnIntent);
+                }
+                finish();
+                // TODO: Not just finishing. Do something useful. Flow design needed.
+            }
+        });
+        errorDialog.show();
     }
 
     private String getInputString()
