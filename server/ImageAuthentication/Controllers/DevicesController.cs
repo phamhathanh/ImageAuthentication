@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using ImageAuthentication.Models;
+using System.Net.Http;
 
 namespace ImageAuthentication.Controllers
 {
@@ -15,23 +16,107 @@ namespace ImageAuthentication.Controllers
     {
         private ImageAuthenticationContext db = new ImageAuthenticationContext();
 
-        // GET: api/Devices
-        public IQueryable<Device> GetDevices()
+        [Route("api/devices/{deviceID}")]
+        [HttpGet]
+        public bool CheckExistence(long deviceID)
         {
-            return db.Devices;
+            return DeviceExists(deviceID);
         }
 
-        // GET: api/Devices/5
-        [ResponseType(typeof(Device))]
-        public async Task<IHttpActionResult> GetDevice(long id)
+        private bool DeviceExists(long deviceID)
         {
-            Device device = await db.Devices.FindAsync(id);
-            if (device == null)
-            {
-                return NotFound();
-            }
+            return db.Devices.Count(e => e.DeviceID == deviceID) > 0;
+        }
 
-            return Ok(device);
+        [Route("api/devices/{deviceID}/{passwordHashString}")]
+        [HttpGet]
+        public bool VerifyPassword(long deviceID, string passwordHashString)
+        {
+            var passwordHash = ValidateAndConvert(passwordHashString);
+
+            var hits = from device in db.Devices
+                       where device.DeviceID == deviceID
+                       select device;
+
+            bool deviceExists = hits.Count() != 0;
+            if (!deviceExists)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            if (hits.Count() != 1)
+                throw new DataException("Device ID must be unique. Something bad happened.");
+
+            var correctHash = hits.First().PasswordHash;
+
+            for (int i = 0; i < 32; i++)
+                if (correctHash[i] != passwordHash[i])
+                    return false;
+
+            return true;
+        }
+
+        private byte[] ValidateAndConvert(string hashString)
+        {
+            if (hashString.Length != 64)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            return Enumerable.Range(0, hashString.Length)
+                     .Where(x => x % 2 == 0)
+                     .Select(x => Convert.ToByte(hashString.Substring(x, 2), 16))
+                     .ToArray();
+        }
+
+        [Route("api/devices/{deviceID}/{passwordHashString}")]
+        [HttpPost]
+        public IHttpActionResult RegisterPassword(long deviceID, string passwordHashString)
+        {
+            var passwordHash = ValidateAndConvert(passwordHashString);
+
+            bool deviceExists = DeviceExists(deviceID);
+            if (deviceExists)
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+
+            var newDevice = new Device()
+            {
+                DeviceID = deviceID,
+                PasswordHash = passwordHash
+            };
+
+            db.Devices.Add(newDevice);
+            db.SaveChanges();
+            return Created<Device>("", null);
+            // Not sure how to return 201.
+        }
+
+        [Route("api/devices/{deviceID}/{oldPassword}/{newPassword}")]
+        [HttpPut]
+        public IHttpActionResult SetPassword(long deviceID, string passwordHashString)
+        {
+            if (passwordHashString.Length != 64)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+
+            var passwordHash = Enumerable.Range(0, passwordHashString.Length)
+                     .Where(x => x % 2 == 0)
+                     .Select(x => Convert.ToByte(passwordHashString.Substring(x, 2), 16))
+                     .ToArray();
+
+            var hits = from device in db.Devices
+                       where device.DeviceID == deviceID
+                       select device;
+
+            if (hits.Count() > 1)
+                throw new DataException("Device ID must be unique. Something bad happened.");
+
+            throw new NotImplementedException();
+
+            bool deviceExists = hits.Count() != 0;
+            if (!deviceExists)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         // PUT: api/Devices/5
@@ -69,37 +154,6 @@ namespace ImageAuthentication.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Devices
-        [ResponseType(typeof(Device))]
-        public async Task<IHttpActionResult> PostDevice(Device device)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Devices.Add(device);
-            await db.SaveChangesAsync();
-
-            return CreatedAtRoute("DefaultApi", new { id = device.DeviceID }, device);
-        }
-
-        // DELETE: api/Devices/5
-        [ResponseType(typeof(Device))]
-        public async Task<IHttpActionResult> DeleteDevice(long id)
-        {
-            Device device = await db.Devices.FindAsync(id);
-            if (device == null)
-            {
-                return NotFound();
-            }
-
-            db.Devices.Remove(device);
-            await db.SaveChangesAsync();
-
-            return Ok(device);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -107,48 +161,6 @@ namespace ImageAuthentication.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool DeviceExists(long deviceID)
-        {
-            return db.Devices.Count(e => e.DeviceID == deviceID) > 0;
-        }
-
-        public bool CheckExistence(long deviceID)
-        {
-            return DeviceExists(deviceID);
-        }
-
-        [Route("api/devices/{deviceID}/{passwordHashString}")]
-        [HttpGet]
-        public bool VerifyPassword(long deviceID, string passwordHashString)
-        {
-            if (passwordHashString.Length != 64)
-                throw new FormatException("Hash value is in incorrect format.");
-
-            var passwordHash = Enumerable.Range(0, passwordHashString.Length)
-                     .Where(x => x % 2 == 0)
-                     .Select(x => Convert.ToByte(passwordHashString.Substring(x, 2), 16))
-                     .ToArray();
-
-            var hits = from device in db.Devices
-                       where device.DeviceID == deviceID
-                       select device;
-
-            bool deviceExists = hits.Count() != 0;
-            if (!deviceExists)
-                return false;
-
-            if (hits.Count() != 1)
-                throw new DataException("Device ID must be unique.");
-
-            var correctHash = hits.First().PasswordHash;
-
-            for (int i = 0; i < 32; i++)
-                if (correctHash[i] != passwordHash[i])
-                    return false;
-
-            return true;
         }
     }
 }

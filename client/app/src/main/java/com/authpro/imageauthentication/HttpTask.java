@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpVerificationTask extends AsyncTask<URL, Void, HttpResult>
+public class HttpTask extends AsyncTask<Void, Void, HttpResult>
 {
     public enum Method
     {
@@ -23,54 +23,20 @@ public class HttpVerificationTask extends AsyncTask<URL, Void, HttpResult>
 
     private final ICallbackable<HttpResult> caller;
     private final Method method;
+    private final URL url;
 
-    public HttpVerificationTask(ICallbackable<HttpResult> caller, Method method)
+    public HttpTask(ICallbackable<HttpResult> caller, Method method, URL url)
     {
         this.method = method;
         this.caller = caller;
+        this.url = url;
     }
 
     @Override
-    public HttpResult doInBackground(URL... urls)
-    {
-        if (urls.length != 1)
-            throw new IllegalArgumentException();
-
-        URL url = urls[0];
-        return getResult(url);
-    }
-
-    private HttpResult getResult(URL url)
+    public HttpResult doInBackground(Void... params)
     {
         HttpURLConnection connection = null;
-        String methodString;
-
-        switch (this.method)
-        {
-            case OPTIONS:
-                methodString = "OPTIONS";
-                break;
-            case GET:
-                methodString = "GET";
-                break;
-            case HEAD:
-                methodString = "HEAD";
-                break;
-            case POST:
-                methodString = "POST";
-                break;
-            case PUT:
-                methodString = "PUT";
-                break;
-            case DELETE:
-                methodString = "DELETE";
-                break;
-            case TRACE:
-                methodString = "TRACE";
-                break;
-            default:
-                throw new RuntimeException();
-        }
+        String methodString = this.method.name();
 
         try
         {
@@ -86,7 +52,7 @@ public class HttpVerificationTask extends AsyncTask<URL, Void, HttpResult>
         }
         catch (IOException exception)
         {
-            return "ERROR";
+            return new HttpResult(null, "ERROR");
         }
         finally
         {

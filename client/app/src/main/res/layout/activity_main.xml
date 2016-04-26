@@ -38,11 +38,5 @@
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:onClick="logIn" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/set_password"
-            android:onClick="setPassword" />
     </LinearLayout>
 </LinearLayout>

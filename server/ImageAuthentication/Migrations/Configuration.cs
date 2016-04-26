@@ -10,23 +10,12 @@ namespace ImageAuthentication.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ImageAuthenticationContext context)
         {
-            context.Devices.AddOrUpdate(x => x.ID,
-                new Device()
-                {
-                    DeviceID = 1,
-                    PasswordHash = Hasher.ComputeHash("1")
-                },
-                new Device()
-                {
-                    DeviceID = 2,
-                    PasswordHash = Hasher.ComputeHash("2")
-                }
-                );
+            context.Devices.AddOrUpdate();
         }
     }
 }

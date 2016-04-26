@@ -1,10 +1,13 @@
 package com.authpro.imageauthentication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -15,13 +18,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
-public class LoginActivity extends Activity implements ICallbackable<HttpResult>
+public class RegisterActivity extends Activity implements ICallbackable<HttpResult>
 {
     private final int alphabetCount = 30;
 
@@ -38,7 +47,7 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_password);
 
-        this.textView = (TextView)findViewById(R.id.textView);
+        this.textView = (TextView) findViewById(R.id.textView);
         setupButtons();
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -78,7 +87,8 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
                 final int index = i * columnCount + j,
                         imageID = images.getResourceId(index, 0);
                 if (imageID == 0)
-                    throw new IndexOutOfBoundsException("Index is outside of resources array range.");
+                    throw new IndexOutOfBoundsException("Index is outside of resources array " +
+                            "range.");
                 imageButton.setTag(index);
                 imageButton.setImageResource(imageID);
 
@@ -137,8 +147,8 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
                     case DragEvent.ACTION_DROP:
                         assertNotNull(initialButton);
 
-                        int firstIndex = (int)initialButton.getTag(),
-                                secondIndex = (int)v.getTag();
+                        int firstIndex = (int) initialButton.getTag(),
+                                secondIndex = (int) v.getTag();
                         addInput(firstIndex, secondIndex);
 
                         toast.setText(initialButton.getTag() + " - " + v.getTag());
@@ -182,15 +192,26 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 
     public void enter(View view)
     {
-        String deviceID = "1",
-            password = getInputString(),
-            passwordHash = "E79E418E48623569D75E2A7B09AE88ED9B77B126A445B9FF9DC6989A08EFA079",
-            urlString = "http://192.168.1.102:52247/api/devices/" + deviceID + "/" + passwordHash;
+        String password = getInputString(),
+                passwordHash;
+        try
+        {
+            passwordHash = computeHash(password);
+        }
+        catch (NoSuchAlgorithmException | UnsupportedEncodingException exception)
+        {
+            throw new RuntimeException();
+        }
+
+        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        long deviceID = Long.parseLong(deviceIDString, 16);
+        String urlString = "http://192.168.1.102:52247/api/devices/" + deviceID + "/" + passwordHash;
 
         try
         {
             URL url = new URL(urlString);
-            HttpTask task = new HttpTask(this, HttpTask.Method.GET, url);
+            HttpTask task = new HttpTask(this, HttpTask.Method.POST, url);
+            task.execute();
         }
         catch (MalformedURLException exception)
         {
@@ -198,35 +219,67 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
         }
     }
 
+    private String computeHash(String input) throws NoSuchAlgorithmException,
+            UnsupportedEncodingException
+    {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        digest.reset();
+
+        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < byteData.length; i++)
+            builder.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        return builder.toString();
+    }
+
     public void callback(HttpResult result)
     {
-        String toastMessage;
-        switch (result.getStatus())
-        {
-            case OK:
-                String content = result.getContent();
-                if (content.equals("true"))
-                    toastMessage = "Success!";
-                else if (content.equals("false"))
-                    toastMessage = "Password mismatched.";
-                else
-                    throw new RuntimeException("API content error.");
-                break;
-            case NOT_FOUND:
-                throw new RuntimeException("Device not registered. Something is wrong.");
-            default:
-                Log.e("LoginActivity", result.getStatus().name());
-                toastMessage = "Connection error.";
-        }
+        String content = result.getContent();
 
-        toast.setText(toastMessage);
-        toast.show();
+        HttpStatus status = result.getStatus();
+        switch (status)
+        {
+            case CREATED:
+                // Registered successfully.
+                String message = "Device registered.";
+                toast.setText(message);
+                toast.show();
+
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+                break;
+            case FORBIDDEN:
+                throw new RuntimeException("Device already registered. Something is wrong.");
+            default:
+                showErrorDialog(status.getCode());
+        }
+    }
+
+    private void showErrorDialog(int errorCode)
+    {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Connection error");
+        errorDialog.setMessage("An error with the connection has occurred. Error code:" + errorCode);
+        errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
+            }
+        });
+        errorDialog.show();
     }
 
     private String getInputString()
     {
         StringBuilder output = new StringBuilder();
-        for (Integer item: this.input)
+        for (Integer item : this.input)
             output.append(item).append("_");
         return output.toString();
     }

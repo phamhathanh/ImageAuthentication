@@ -2,24 +2,24 @@ package com.authpro.imageauthentication;
 
 public class HttpResult
 {
-    private final HttpStatus statusCode;
+    private final HttpStatus status;
     private final String content;
 
-    public HttpResult(HttpStatus statusCode, String content)
+    public HttpResult(HttpStatus status, String content)
     {
-        this.statusCode = statusCode;
+        this.status = status;
         this.content = content;
     }
 
-    public HttpResult(int statusCode, String content)
+    public HttpResult(int status, String content)
     {
-        this.statusCode = statusCode;
+        this.status = HttpStatus.fromCode(status);
         this.content = content;
     }
 
-    public Response getResponse()
+    public HttpStatus getStatus()
     {
-        return response;
+        return status;
     }
 
     public String getContent()

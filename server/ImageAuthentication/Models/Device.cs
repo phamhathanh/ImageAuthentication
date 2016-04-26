@@ -12,6 +12,7 @@ namespace ImageAuthentication.Models
         [Required]
         [Index("UK_Devices", IsUnique = true)]
         public long DeviceID { get; set; }
+        [Required]
         public byte[] PasswordHash { get; set; }
     }
 }
