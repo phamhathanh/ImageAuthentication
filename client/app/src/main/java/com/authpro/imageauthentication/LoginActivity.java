@@ -1,11 +1,13 @@
 package com.authpro.imageauthentication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -16,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import static junit.framework.Assert.*;
@@ -195,27 +195,48 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 
     public void callback(HttpResult result)
     {
-        String toastMessage;
-        switch (result.getStatus())
+        HttpStatus status = result.getStatus();
+        switch (status)
         {
             case OK:
                 String content = result.getContent();
                 if (content.equals("true"))
-                    toastMessage = "Success!";
+                {
+                    toast.setText("Success!");
+                    toast.show();
+                    Intent intent = new Intent(this, LoggedInActivity.class);
+                    startActivity(intent);
+                }
                 else if (content.equals("false"))
-                    toastMessage = "Password mismatched.";
+                {
+                    toast.setText("Password mismatched.");
+                    toast.show();
+                    finish();
+                }
                 else
                     throw new RuntimeException("API content error.");
                 break;
             case NOT_FOUND:
                 throw new RuntimeException("Device not registered. Something is wrong.");
             default:
-                Log.e("LoginActivity", result.getStatus().name());
-                toastMessage = "Connection error.";
+                showErrorDialog(status.getCode());
         }
+    }
 
-        toast.setText(toastMessage);
-        toast.show();
+    private void showErrorDialog(int errorCode)
+    {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Connection error");
+        errorDialog.setMessage("An error with the connection has occurred. Error code:" + errorCode);
+        errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        errorDialog.show();
     }
 
     private String getInputString()

@@ -24,7 +24,16 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="Login">
+            android:label="Login"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".LoggedInActivity"
+            android:label="Logged In">
+        </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="Change Password">
         </activity>
     </application>
 </manifest>

@@ -105,6 +105,7 @@ namespace ImageAuthentication.Controllers
                 throw new HttpResponseException(HttpStatusCode.Unauthorized);
 
             device.PasswordHash = newHash;
+            db.SaveChanges();
             return Ok();
         }
 

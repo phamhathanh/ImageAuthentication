@@ -179,12 +179,13 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
 
     public void clear(View view)
     {
+        clear();
+    }
+
+    private void clear()
+    {
         input = new ArrayList<>();
         textView.setText("");
-
-        toast.setText("Cleared.");
-        toast.show();
-        // Somehow this line is necessary for the TextView to update
     }
 
     public void enter(View view)

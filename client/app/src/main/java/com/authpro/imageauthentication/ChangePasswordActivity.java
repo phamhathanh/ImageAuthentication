@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
@@ -19,19 +18,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import junit.framework.Assert;
-
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import static junit.framework.Assert.*;
 
 public class ChangePasswordActivity extends Activity implements ICallbackable<HttpResult>
 {
+    private enum State
+    {
+        ENTER_OLD_PASSWORD,
+        ENTER_NEW_PASSWORD,
+        CONFIMR_NEW_PASSWORD,
+        FINISHED
+    }
+
+    private State state = State.ENTER_OLD_PASSWORD;
+
     private final int alphabetCount = 30;
 
     private ArrayList<Integer> input = new ArrayList<>();
@@ -40,6 +43,8 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     private Toast toast;
 
     private View initialButton = null;
+
+    private Stack<String> passwords = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -179,47 +184,81 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
 
     public void clear(View view)
     {
+        clear();
+    }
+
+    private void clear()
+    {
         input = new ArrayList<>();
         textView.setText("");
-
-        toast.setText("Cleared.");
-        toast.show();
-        // Somehow this line is necessary for the TextView to update
     }
 
     public void enter(View view)
     {
+        String password = getInputString();
+        passwords.push(password);
+        clear();
+
+        switch (state)
+        {
+            case ENTER_OLD_PASSWORD:
+                state = State.ENTER_NEW_PASSWORD;
+                break;
+            case ENTER_NEW_PASSWORD:
+                state = State.CONFIMR_NEW_PASSWORD;
+                break;
+            case CONFIMR_NEW_PASSWORD:
+                state = State.FINISHED;
+                changePassword();
+                break;
+            case FINISHED:
+                return;
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private String getInputString()
+    {
+        StringBuilder output = new StringBuilder();
+        for (Integer item : this.input)
+            output.append(item).append("_");
+        return output.toString();
+    }
+
+    private void changePassword()
+    {
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
 
-        String password = getInputString(),
-            passwordHash = Utils.computeHash(password, deviceID);
+        assertTrue(passwords.size() == 3);
+        String newPassword = passwords.pop(),
+            theSameNewPassword = passwords.pop(),
+            oldPassword = passwords.pop();
+        assertEquals(newPassword, theSameNewPassword);
 
-        HttpTask.Method method = HttpTask.Method.GET;
-        String url = Config.API_URL + deviceID + "/" + passwordHash;
+        String oldPasswordHash = Utils.computeHash(oldPassword, deviceID),
+                newPasswordHash = Utils.computeHash(newPassword, deviceID);
+
+        HttpTask.Method method = HttpTask.Method.PUT;
+        String url = Config.API_URL + deviceID + "/" + oldPasswordHash + "/" + newPasswordHash;
 
         HttpTask task = new HttpTask(this, method, url);
         task.execute();
-
-        // Should ask thrice for 3 passwords tho.
     }
 
     public void callback(HttpResult result)
     {
         String content = result.getContent();
-        assertTrue(content.equals(""));
 
         HttpStatus status = result.getStatus();
         switch (status)
         {
             case OK:
-                // Set password successfully.
-                String message = "Password set.";
+                // Change password successfully.
+                String message = "Password changed.";
                 toast.setText(message);
                 toast.show();
-
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
                 break;
             default:
@@ -238,21 +277,34 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
             public void onClick(DialogInterface dialog, int which)
             {
                 dialog.dismiss();
-
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
             }
         });
         errorDialog.show();
     }
 
-    private String getInputString()
+    @Override
+    public void onBackPressed()
     {
-        StringBuilder output = new StringBuilder();
-        for (Integer item : this.input)
-            output.append(item).append("_");
-        return output.toString();
+        passwords.pop();
+        clear();
+
+        switch (state)
+        {
+            case ENTER_OLD_PASSWORD:
+                finish();
+                break;
+            case ENTER_NEW_PASSWORD:
+                state = State.ENTER_OLD_PASSWORD;
+                break;
+            case CONFIMR_NEW_PASSWORD:
+                state = State.ENTER_NEW_PASSWORD;
+                break;
+            case FINISHED:
+                return;
+            default:
+                throw new IllegalStateException();
+        }
     }
 }
 

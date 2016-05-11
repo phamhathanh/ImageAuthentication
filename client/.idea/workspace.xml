@@ -18,20 +18,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568e0d3e-355c-4c53-9031-56a92973844b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoggedInActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_logged_in.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication/Controllers/DevicesController.cs" afterPath="$PROJECT_DIR$/../server/ImageAuthentication/Controllers/DevicesController.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.sln" afterPath="$PROJECT_DIR$/../server/ImageAuthentication.sln" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_enter_password.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_enter_password.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="client.iws" />
@@ -60,53 +52,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+              <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
               <folding>
-                <element signature="e#737#738#0" expanded="true" />
-                <element signature="e#778#779#0" expanded="true" />
-                <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#340#358#0" expanded="true" />
+                <element signature="e#520#538#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegisterActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RegisterActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6708408">
-              <caret line="151" column="58" selection-start-line="151" selection-start-column="58" selection-end-line="151" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="207" column="45" selection-start-line="207" selection-start-column="45" selection-end-line="207" selection-end-column="45" />
               <folding>
-                <element signature="method#onCreate#0;class#RegisterActivity#0" expanded="false" />
-                <element signature="method#addInput#0;class#RegisterActivity#0" expanded="false" />
-                <element signature="method#showErrorDialog#0;class#RegisterActivity#0" expanded="false" />
-                <element signature="method#getInputString#0;class#RegisterActivity#0" expanded="false" />
+                <element signature="method#setupButtons#0;class#RegisterActivity#0" expanded="false" />
+                <element signature="method#setupForDragEvent#0;class#RegisterActivity#0" expanded="false" />
+                <element signature="e#6206#6207#0" expanded="true" />
+                <element signature="e#6229#6230#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Config.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChangePasswordActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChangePasswordActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="218" column="21" selection-start-line="218" selection-start-column="16" selection-end-line="218" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.9836066">
+              <caret line="253" column="25" selection-start-line="253" selection-start-column="19" selection-end-line="253" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1725#1750#0" expanded="true" />
+                <element signature="e#1784#1806#0" expanded="true" />
+                <element signature="e#3386#4395#0" expanded="true" />
+                <element signature="e#4394#4395#0" expanded="true" />
+                <element signature="e#6129#6130#0" expanded="true" />
+                <element signature="e#6152#6153#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1691,14 +1677,16 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_enter_password.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_logged_in.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoggedInActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" />
       </list>
     </option>
   </component>
@@ -1789,6 +1777,24 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -1839,6 +1845,9 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="EBAZCY152278" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Sources\Android\ImageAuthentication\client\app\src\main\res\layout" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.authpro.imageauthentication" />
     </key>
@@ -2026,7 +2035,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2101,36 +2110,13 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="237" column="45" selection-start-line="237" selection-start-column="45" selection-end-line="237" selection-end-column="45" />
-          <folding>
-            <element signature="method#onCreate#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#addInput#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#showErrorDialog#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#getInputString#0;class#RegisterActivity#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="206" column="28" selection-start-line="206" selection-start-column="28" selection-end-line="206" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2143,7 +2129,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2178,6 +2163,12 @@
           <caret line="210" column="91" selection-start-line="210" selection-start-column="71" selection-end-line="210" selection-end-column="91" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1725#1750#0" expanded="true" />
+            <element signature="e#1784#1806#0" expanded="true" />
+            <element signature="e#3386#4395#0" expanded="true" />
+            <element signature="e#4394#4395#0" expanded="true" />
+            <element signature="e#6129#6130#0" expanded="true" />
+            <element signature="e#6152#6153#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2187,8 +2178,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2216,7 +2207,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2251,6 +2241,12 @@
           <caret line="282" column="85" selection-start-line="282" selection-start-column="85" selection-end-line="282" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1725#1750#0" expanded="true" />
+            <element signature="e#1784#1806#0" expanded="true" />
+            <element signature="e#3386#4395#0" expanded="true" />
+            <element signature="e#4394#4395#0" expanded="true" />
+            <element signature="e#6129#6130#0" expanded="true" />
+            <element signature="e#6152#6153#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2260,8 +2256,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="43" column="85" selection-start-line="43" selection-start-column="85" selection-end-line="43" selection-end-column="85" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2274,7 +2270,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2309,6 +2304,12 @@
           <caret line="282" column="85" selection-start-line="282" selection-start-column="85" selection-end-line="282" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1725#1750#0" expanded="true" />
+            <element signature="e#1784#1806#0" expanded="true" />
+            <element signature="e#3386#4395#0" expanded="true" />
+            <element signature="e#4394#4395#0" expanded="true" />
+            <element signature="e#6129#6130#0" expanded="true" />
+            <element signature="e#6152#6153#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2318,8 +2319,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="43" column="85" selection-start-line="43" selection-start-column="85" selection-end-line="43" selection-end-column="85" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2332,7 +2333,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2342,8 +2342,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2356,7 +2356,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2366,8 +2365,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2380,7 +2379,6 @@
             <element signature="e#737#738#0" expanded="true" />
             <element signature="e#778#779#0" expanded="true" />
             <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2390,8 +2388,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding>
-            <element signature="e#1428#1453#0" expanded="true" />
-            <element signature="e#1487#1509#0" expanded="true" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2415,13 +2413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33273703">
           <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57781756">
-          <caret line="21" column="21" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -2460,14 +2451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://F:/Platforms/Android/sources/android-23/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="669" column="13" selection-start-line="669" selection-start-column="13" selection-end-line="669" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpStatus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27868852">
@@ -2503,25 +2486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.050147492">
           <caret line="2" column="79" selection-start-line="2" selection-start-column="79" selection-end-line="2" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72131145">
-          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -2577,17 +2541,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6284153">
-          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-          <folding>
-            <element signature="e#2458#2459#0" expanded="true" />
-            <element signature="e#2502#2503#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46448088">
@@ -2595,14 +2548,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5474061">
-          <caret line="142" column="58" selection-start-line="142" selection-start-column="58" selection-end-line="142" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2614,23 +2559,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.12830189">
+          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_logged_in.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7056604">
+          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68694097">
+          <caret line="235" column="0" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
           <folding>
-            <element signature="e#737#738#0" expanded="true" />
-            <element signature="e#778#779#0" expanded="true" />
-            <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#1446#1471#0" expanded="true" />
+            <element signature="e#1505#1527#0" expanded="true" />
+            <element signature="e#7910#8122#0" expanded="true" />
+            <element signature="e#8121#8122#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java">
+    <entry file="file://F:/Platforms/Android/sources/android-23/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33273703">
+          <caret line="2497" column="16" selection-start-line="2497" selection-start-column="16" selection-end-line="2497" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6202186">
+          <caret line="71" column="42" selection-start-line="71" selection-start-column="42" selection-end-line="71" selection-end-column="42" />
+          <folding>
+            <element signature="method#showErrorDialog#0;class#MainActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="21" selection-start-line="218" selection-start-column="16" selection-end-line="218" selection-end-column="21" />
+          <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
+          <folding>
+            <element signature="e#340#358#0" expanded="true" />
+            <element signature="e#520#538#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoggedInActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27868852">
+          <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2639,13 +2635,48 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6708408">
-          <caret line="151" column="58" selection-start-line="151" selection-start-column="58" selection-end-line="151" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="207" column="45" selection-start-line="207" selection-start-column="45" selection-end-line="207" selection-end-column="45" />
           <folding>
-            <element signature="method#onCreate#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#addInput#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#showErrorDialog#0;class#RegisterActivity#0" expanded="false" />
-            <element signature="method#getInputString#0;class#RegisterActivity#0" expanded="false" />
+            <element signature="method#setupButtons#0;class#RegisterActivity#0" expanded="false" />
+            <element signature="method#setupForDragEvent#0;class#RegisterActivity#0" expanded="false" />
+            <element signature="e#6206#6207#0" expanded="true" />
+            <element signature="e#6229#6230#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.18579236">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.625683">
+          <caret line="93" column="40" selection-start-line="93" selection-start-column="30" selection-end-line="93" selection-end-column="40" />
+          <folding>
+            <element signature="e#2458#2459#0" expanded="true" />
+            <element signature="e#2502#2503#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9836066">
+          <caret line="253" column="25" selection-start-line="253" selection-start-column="19" selection-end-line="253" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1725#1750#0" expanded="true" />
+            <element signature="e#1784#1806#0" expanded="true" />
+            <element signature="e#3386#4395#0" expanded="true" />
+            <element signature="e#4394#4395#0" expanded="true" />
+            <element signature="e#6129#6130#0" expanded="true" />
+            <element signature="e#6152#6153#0" expanded="true" />
           </folding>
         </state>
       </provider>
