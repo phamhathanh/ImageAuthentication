@@ -147,12 +147,9 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
                     case DragEvent.ACTION_DROP:
                         assertNotNull(initialButton);
 
-                        int firstIndex = (int) initialButton.getTag(),
-                                secondIndex = (int) v.getTag();
+                        int firstIndex = (int)initialButton.getTag(),
+                                secondIndex = (int)v.getTag();
                         addInput(firstIndex, secondIndex);
-
-                        toast.setText(initialButton.getTag() + " - " + v.getTag());
-                        toast.show();
 
                         v.setPressed(false);
                         v.playSoundEffect(SoundEffectConstants.CLICK);
@@ -192,45 +189,17 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
 
     public void enter(View view)
     {
-        String password = getInputString(),
-                passwordHash;
-        try
-        {
-            passwordHash = computeHash(password);
-        }
-        catch (NoSuchAlgorithmException | UnsupportedEncodingException exception)
-        {
-            throw new RuntimeException();
-        }
-
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
-        String urlString = "http://192.168.1.102:52247/api/devices/" + deviceID + "/" + passwordHash;
 
-        try
-        {
-            URL url = new URL(urlString);
-            HttpTask task = new HttpTask(this, HttpTask.Method.POST, url);
-            task.execute();
-        }
-        catch (MalformedURLException exception)
-        {
-            throw new RuntimeException("Wrong URL.", exception);
-        }
-    }
+        String password = getInputString(),
+            passwordHash = Utils.computeHash(password, deviceID);
 
-    private String computeHash(String input) throws NoSuchAlgorithmException,
-            UnsupportedEncodingException
-    {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.reset();
+        HttpTask.Method method = HttpTask.Method.POST;
+        String url = Config.API_URL + deviceID + "/" + passwordHash;
 
-        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < byteData.length; i++)
-            builder.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        return builder.toString();
+        HttpTask task = new HttpTask(this, method, url);
+        task.execute();
     }
 
     public void callback(HttpResult result)

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -46,7 +47,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_password);
 
-        this.textView = (TextView) findViewById(R.id.textView);
+        this.textView = (TextView)findViewById(R.id.textView);
         setupButtons();
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -61,7 +62,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                 columnCount = resources.getInteger(columnCountResID),
                 rowCount = resources.getInteger(rowCountResID);
 
-        final ViewGroup gridLayout = (ViewGroup) findViewById(R.id.rows);
+        final ViewGroup gridLayout = (ViewGroup)findViewById(R.id.rows);
         final int realRowCount = gridLayout.getChildCount();
         assertEquals(realRowCount, rowCount);
 
@@ -71,7 +72,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         {
             final View child = gridLayout.getChildAt(i);
             assertTrue(child instanceof LinearLayout);
-            LinearLayout row = (LinearLayout) child;
+            LinearLayout row = (LinearLayout)child;
 
             final int realColumnCount = row.getChildCount();
             assertEquals(realColumnCount, columnCount);
@@ -81,7 +82,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
             {
                 final View cell = row.getChildAt(j);
                 assertTrue(cell instanceof ImageButton);
-                final ImageButton imageButton = (ImageButton) cell;
+                final ImageButton imageButton = (ImageButton)cell;
 
                 final int index = i * columnCount + j,
                         imageID = images.getResourceId(index, 0);
@@ -146,12 +147,9 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                     case DragEvent.ACTION_DROP:
                         assertNotNull(initialButton);
 
-                        int firstIndex = (int) initialButton.getTag(),
-                                secondIndex = (int) v.getTag();
+                        int firstIndex = (int)initialButton.getTag(),
+                                secondIndex = (int)v.getTag();
                         addInput(firstIndex, secondIndex);
-
-                        toast.setText(initialButton.getTag() + " - " + v.getTag());
-                        toast.show();
 
                         v.setPressed(false);
                         v.playSoundEffect(SoundEffectConstants.CLICK);
@@ -191,44 +189,19 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
 
     public void enter(View view)
     {
-        String deviceID = "1",
-                password = getInputString(),
-                urlString, passwordHash;
-        try
-        {
-            passwordHash = computeHash(password);
-        }
-        catch (NoSuchAlgorithmException | UnsupportedEncodingException exception)
-        {
-            throw new RuntimeException();
-        }
+        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        long deviceID = Long.parseLong(deviceIDString, 16);
 
-        urlString = "http://192.168.43.149:52247/api/set/" + deviceID + "/" + passwordHash;
-        // TODO: Change url.
+        String password = getInputString(),
+            passwordHash = Utils.computeHash(password, deviceID);
 
-        try
-        {
-            URL url = new URL(urlString);
-            HttpTask task = new HttpTask(this, HttpTask.Method.PUT, url);
-        }
-        catch (MalformedURLException exception)
-        {
-            throw new RuntimeException("Wrong URL.", exception);
-        }
-    }
+        HttpTask.Method method = HttpTask.Method.GET;
+        String url = Config.API_URL + deviceID + "/" + passwordHash;
 
-    private String computeHash(String input) throws NoSuchAlgorithmException,
-            UnsupportedEncodingException
-    {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.reset();
+        HttpTask task = new HttpTask(this, method, url);
+        task.execute();
 
-        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
-        StringBuilder builder = new StringBuilder();
-
-        for (int i = 0; i < byteData.length; i++)
-            builder.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        return builder.toString();
+        // Should ask thrice for 3 passwords tho.
     }
 
     public void callback(HttpResult result)
@@ -258,7 +231,8 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
         errorDialog.setTitle("Connection error");
-        errorDialog.setMessage("An error with the connection has occurred. Error code:" + errorCode);
+        errorDialog.setMessage("An error with the connection has occurred. Error code:" +
+                errorCode);
         errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)

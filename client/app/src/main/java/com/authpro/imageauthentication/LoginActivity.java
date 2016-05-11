@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -141,9 +142,6 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
                                 secondIndex = (int)v.getTag();
                         addInput(firstIndex, secondIndex);
 
-                        toast.setText(initialButton.getTag() + " - " + v.getTag());
-                        toast.show();
-
                         v.setPressed(false);
                         v.playSoundEffect(SoundEffectConstants.CLICK);
                         break;
@@ -182,20 +180,17 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 
     public void enter(View view)
     {
-        String deviceID = "1",
-            password = getInputString(),
-            passwordHash = "E79E418E48623569D75E2A7B09AE88ED9B77B126A445B9FF9DC6989A08EFA079",
-            urlString = "http://192.168.1.102:52247/api/devices/" + deviceID + "/" + passwordHash;
+        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        long deviceID = Long.parseLong(deviceIDString, 16);
 
-        try
-        {
-            URL url = new URL(urlString);
-            HttpTask task = new HttpTask(this, HttpTask.Method.GET, url);
-        }
-        catch (MalformedURLException exception)
-        {
-            throw new RuntimeException("Wrong URL.", exception);
-        }
+        String password = getInputString(),
+            passwordHash = Utils.computeHash(password, deviceID);
+
+        HttpTask.Method method = HttpTask.Method.GET;
+        String url = Config.API_URL + deviceID + "/" + passwordHash;
+
+        HttpTask task = new HttpTask(this, method, url);
+        task.execute();
     }
 
     public void callback(HttpResult result)

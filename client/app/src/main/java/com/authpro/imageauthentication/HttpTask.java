@@ -6,6 +6,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpTask extends AsyncTask<Void, Void, HttpResult>
@@ -25,11 +26,11 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
     private final Method method;
     private final URL url;
 
-    public HttpTask(ICallbackable<HttpResult> caller, Method method, URL url)
+    public HttpTask(ICallbackable<HttpResult> caller, Method method, String urlString)
     {
         this.method = method;
         this.caller = caller;
-        this.url = url;
+        this.url = urlFromString(urlString);
     }
 
     @Override
@@ -58,6 +59,18 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
         {
             if (connection != null)
                 connection.disconnect();
+        }
+    }
+
+    private URL urlFromString(String urlString)
+    {
+        try
+        {
+            return new URL(urlString);
+        }
+        catch (MalformedURLException exception)
+        {
+            throw new RuntimeException("Wrong URL.", exception);
         }
     }
 

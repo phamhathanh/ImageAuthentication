@@ -20,24 +20,24 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getActionBar().setIcon(R.drawable.icon_menu);
     }
 
     public void logIn(View view)
     {
+        checkIfDeviceRegistered();
+    }
+
+    private void checkIfDeviceRegistered()
+    {
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
-        String urlString = "http://192.168.1.102:52247/api/devices/" + deviceID;
-        try
-        {
-            URL url = new URL(urlString);
-            HttpTask task = new HttpTask(this, HttpTask.Method.GET, url);
-            task.execute();
-        }
-        catch (MalformedURLException exception)
-        {
-            throw new RuntimeException("Wrong URL.", exception);
-        }
+
+        HttpTask.Method method = HttpTask.Method.GET;
+        String url = Config.API_URL + deviceID;
+
+        HttpTask task = new HttpTask(this, method, url);
+        task.execute();
     }
 
     @Override
