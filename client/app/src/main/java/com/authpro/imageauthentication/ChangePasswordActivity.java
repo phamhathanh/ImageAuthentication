@@ -3,7 +3,6 @@ package com.authpro.imageauthentication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -29,11 +28,13 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     {
         ENTER_OLD_PASSWORD,
         ENTER_NEW_PASSWORD,
-        CONFIMR_NEW_PASSWORD,
+        CONFIRM_NEW_PASSWORD,
         FINISHED
     }
 
     private State state = State.ENTER_OLD_PASSWORD;
+
+    private String oldPassword, newPassword;
 
     private final int alphabetCount = 30;
 
@@ -43,8 +44,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     private Toast toast;
 
     private View initialButton = null;
-
-    private Stack<String> passwords = new Stack<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -195,27 +194,35 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
 
     public void enter(View view)
     {
-        String password = getInputString();
-        passwords.push(password);
-        clear();
-
         switch (state)
         {
             case ENTER_OLD_PASSWORD:
+                oldPassword = getInputString();
                 state = State.ENTER_NEW_PASSWORD;
                 break;
             case ENTER_NEW_PASSWORD:
-                state = State.CONFIMR_NEW_PASSWORD;
+                newPassword = getInputString();
+                state = State.CONFIRM_NEW_PASSWORD;
                 break;
-            case CONFIMR_NEW_PASSWORD:
+            case CONFIRM_NEW_PASSWORD:
+                String passwordConfirm = getInputString();
+                boolean matches = passwordConfirm.equals(newPassword);
+                if (!matches)
+                {
+                    toast.setText("Password mismatched.");
+                    toast.show();
+                    return;
+                }
+                else
+                    changePassword();
                 state = State.FINISHED;
-                changePassword();
                 break;
             case FINISHED:
                 return;
             default:
                 throw new IllegalStateException();
         }
+        clear();
     }
 
     private String getInputString()
@@ -230,12 +237,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     {
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
-
-        assertTrue(passwords.size() == 3);
-        String newPassword = passwords.pop(),
-            theSameNewPassword = passwords.pop(),
-            oldPassword = passwords.pop();
-        assertEquals(newPassword, theSameNewPassword);
 
         String oldPasswordHash = Utils.computeHash(oldPassword, deviceID),
                 newPasswordHash = Utils.computeHash(newPassword, deviceID);
@@ -286,7 +287,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     @Override
     public void onBackPressed()
     {
-        passwords.pop();
         clear();
 
         switch (state)
@@ -295,9 +295,13 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                 finish();
                 break;
             case ENTER_NEW_PASSWORD:
+                assertNull(newPassword);
+                oldPassword = null;
                 state = State.ENTER_OLD_PASSWORD;
                 break;
-            case CONFIMR_NEW_PASSWORD:
+            case CONFIRM_NEW_PASSWORD:
+                assertNotNull(oldPassword);
+                newPassword = null;
                 state = State.ENTER_NEW_PASSWORD;
                 break;
             case FINISHED:

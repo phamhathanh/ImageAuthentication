@@ -16,6 +16,7 @@ namespace ImageAuthentication.Migrations
         protected override void Seed(ImageAuthenticationContext context)
         {
             context.Devices.AddOrUpdate();
+            context.Images.AddOrUpdate();
         }
     }
 }

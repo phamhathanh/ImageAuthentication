@@ -32,6 +32,16 @@ import static junit.framework.Assert.assertTrue;
 
 public class RegisterActivity extends Activity implements ICallbackable<HttpResult>
 {
+    private enum State
+    {
+        ENTER_PASSWORD,
+        CONFIRM_PASSWORD,
+        FINISHED
+    }
+
+    private State state = State.ENTER_PASSWORD;
+    private String password;
+
     private final int alphabetCount = 30;
 
     private ArrayList<Integer> input = new ArrayList<>();
@@ -190,11 +200,40 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
 
     public void enter(View view)
     {
+        switch (state)
+        {
+            case ENTER_PASSWORD:
+                password = getInputString();
+                state = State.ENTER_PASSWORD;
+                break;
+            case CONFIRM_PASSWORD:
+                String passwordConfirm = getInputString();
+                boolean matches = passwordConfirm.equals(password);
+                if (!matches)
+                {
+                    toast.setText("Password mismatched.");
+                    toast.show();
+                    return;
+                }
+                else
+                    register();
+                state = State.FINISHED;
+                break;
+            case FINISHED:
+                return;
+            default:
+                throw new IllegalStateException();
+        }
+        clear();
+    }
+
+    private void register()
+    {
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
 
-        String password = getInputString(),
-            passwordHash = Utils.computeHash(password, deviceID);
+        assertNotNull(password);
+        String passwordHash = Utils.computeHash(password, deviceID);
 
         HttpTask.Method method = HttpTask.Method.POST;
         String url = Config.API_URL + deviceID + "/" + passwordHash;

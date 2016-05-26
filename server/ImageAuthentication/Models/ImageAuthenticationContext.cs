@@ -20,5 +20,6 @@ namespace ImageAuthentication.Models
         }
 
         public DbSet<Device> Devices { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }
