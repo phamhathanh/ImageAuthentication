@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import static junit.framework.Assert.*;
 
 public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 {
-    private final int alphabetCount = 30;
+    private final int alphabetCount = 16;
 
     private ArrayList<Integer> input = new ArrayList<>();
     private TextView textView;
@@ -39,7 +40,7 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_password);
 
-        this.textView = (TextView)findViewById(R.id.textView);
+        this.textView = (EditText)findViewById(R.id.textView);
         setupButtons();
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -72,7 +73,7 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 
             for (int j = 0; j < columnCount; j++)
             {
-                final View cell = row.getChildAt(j);
+                final View cell = ((ViewGroup)row.getChildAt(j)).getChildAt(0);
                 assertTrue(cell instanceof ImageButton);
                 final ImageButton imageButton = (ImageButton) cell;
 

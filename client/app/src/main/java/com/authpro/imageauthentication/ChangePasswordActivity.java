@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_password);
 
-        this.textView = (TextView)findViewById(R.id.textView);
+        this.textView = (EditText)findViewById(R.id.textView);
         setupButtons();
 
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);

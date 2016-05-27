@@ -9,9 +9,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 public class MainActivity extends Activity implements ICallbackable<HttpResult>
 {
     private static final int REGISTER_REQUEST_CODE = 1;

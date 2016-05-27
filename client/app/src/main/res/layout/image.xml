@@ -1,0 +1,14 @@
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
+    <ImageButton
+        app:layout_widthPercent="100%"
+        app:layout_aspectRatio="100%"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"/>
+</android.support.percent.PercentRelativeLayout>
