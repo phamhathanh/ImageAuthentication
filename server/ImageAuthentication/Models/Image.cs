@@ -10,7 +10,7 @@ namespace ImageAuthentication.Models
     {
         public int ID { get; set; }
         [Required]
-        [Column(TypeName = "VARCHAR")]
+        [Column(TypeName = "VARCHAR(MAX)")]
         public string Base64String { get; set; }
     }
 }
