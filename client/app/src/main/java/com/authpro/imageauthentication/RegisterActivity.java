@@ -4,29 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -56,7 +40,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
         setContentView(R.layout.activity_register);
 
         this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
-        this.registerInstruction = (TextView)findViewById(R.id.registerInstruction);
+        this.registerInstruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     }
 

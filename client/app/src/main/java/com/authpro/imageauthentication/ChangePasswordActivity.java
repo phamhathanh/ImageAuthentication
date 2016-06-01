@@ -3,18 +3,9 @@ package com.authpro.imageauthentication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,158 +29,24 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
 
     private final int alphabetCount = 30;
 
-    private ArrayList<Integer> input = new ArrayList<>();
-    private TextView textView;
-
+    private InputFragment input;
+    private TextView instruction;
     private Toast toast;
-
-    private View initialButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_change);
 
-        this.textView = (EditText)findViewById(R.id.textView);
-        setupButtons();
-
+        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
+        this.instruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
-    }
-
-    private void setupButtons()
-    {
-        final Resources resources = getResources();
-
-        final int columnCountResID = R.integer.gridColumnCount,
-                rowCountResID = R.integer.gridRowCount,
-                columnCount = resources.getInteger(columnCountResID),
-                rowCount = resources.getInteger(rowCountResID);
-
-        final ViewGroup gridLayout = (ViewGroup)findViewById(R.id.rows);
-        final int realRowCount = gridLayout.getChildCount();
-        assertEquals(realRowCount, rowCount);
-
-        TypedArray images = resources.obtainTypedArray(R.array.images);
-
-        for (int i = 0; i < rowCount; i++)
-        {
-            final View child = gridLayout.getChildAt(i);
-            assertTrue(child instanceof LinearLayout);
-            LinearLayout row = (LinearLayout)child;
-
-            final int realColumnCount = row.getChildCount();
-            assertEquals(realColumnCount, columnCount);
-            assertEquals(rowCount * columnCount, alphabetCount);
-
-            for (int j = 0; j < columnCount; j++)
-            {
-                final View cell = row.getChildAt(j);
-                assertTrue(cell instanceof ImageButton);
-                final ImageButton imageButton = (ImageButton)cell;
-
-                final int index = i * columnCount + j,
-                        imageID = images.getResourceId(index, 0);
-                if (imageID == 0)
-                    throw new IndexOutOfBoundsException("Index is outside of resources array " +
-                            "range.");
-                imageButton.setTag(index);
-                imageButton.setImageResource(imageID);
-
-                setupForDragEvent(cell);
-            }
-        }
-    }
-
-    private void setupForDragEvent(View view)
-    {
-        view.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                assertTrue(v instanceof ImageButton);
-
-                int action = event.getAction() & MotionEvent.ACTION_MASK;
-                switch (action)
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        assertNull(initialButton);
-                        // TODO: Fix the bug when this is not null sometimes.
-                        initialButton = v;
-                        View.DragShadowBuilder shadow = new View.DragShadowBuilder();
-                        v.startDrag(null, shadow, null, 0);
-                        v.setPressed(true);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        view.setOnDragListener(new View.OnDragListener()
-        {
-            @Override
-            public boolean onDrag(View v, DragEvent event)
-            {
-
-                int action = event.getAction();
-                switch (action)
-                {
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        if (v != initialButton)
-                            v.setPressed(true);
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        if (v != initialButton)
-                            v.setPressed(false);
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        assertNotNull(initialButton);
-
-                        int firstIndex = (int)initialButton.getTag(),
-                                secondIndex = (int)v.getTag();
-                        addInput(firstIndex, secondIndex);
-
-                        v.setPressed(false);
-                        v.playSoundEffect(SoundEffectConstants.CLICK);
-                        break;
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        if (v == initialButton)
-                        {
-                            initialButton.setPressed(false);
-                            initialButton = null;
-                        }
-                        break;
-                }
-
-                return true;
-            }
-        });
-    }
-
-    private void addInput(int firstIndex, int secondIndex)
-    {
-        int index = firstIndex * alphabetCount + secondIndex;
-        input.add(index);
-
-        textView.append("*");
-        assertEquals(textView.length(), input.size());
     }
 
     public void clear(View view)
     {
-        clear();
-    }
-
-    private void clear()
-    {
-        input = new ArrayList<>();
-        textView.setText("");
+        input.clear();
     }
 
     public void enter(View view)
@@ -197,15 +54,17 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         switch (state)
         {
             case ENTER_OLD_PASSWORD:
-                oldPassword = getInputString();
+                oldPassword = input.getInputString();
                 state = State.ENTER_NEW_PASSWORD;
+                instruction.setText(R.string.enter_new_password);
                 break;
             case ENTER_NEW_PASSWORD:
-                newPassword = getInputString();
+                newPassword = input.getInputString();
                 state = State.CONFIRM_NEW_PASSWORD;
+                instruction.setText(R.string.confirm_password);
                 break;
             case CONFIRM_NEW_PASSWORD:
-                String passwordConfirm = getInputString();
+                String passwordConfirm = input.getInputString();
                 boolean matches = passwordConfirm.equals(newPassword);
                 if (!matches)
                 {
@@ -222,15 +81,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
             default:
                 throw new IllegalStateException();
         }
-        clear();
-    }
-
-    private String getInputString()
-    {
-        StringBuilder output = new StringBuilder();
-        for (Integer item : this.input)
-            output.append(item).append("_");
-        return output.toString();
+        input.clear();
     }
 
     private void changePassword()
@@ -287,8 +138,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     @Override
     public void onBackPressed()
     {
-        clear();
-
+        input.clear();
         switch (state)
         {
             case ENTER_OLD_PASSWORD:
@@ -298,11 +148,13 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                 assertNull(newPassword);
                 oldPassword = null;
                 state = State.ENTER_OLD_PASSWORD;
+                instruction.setText(R.string.enter_old_password);
                 break;
             case CONFIRM_NEW_PASSWORD:
                 assertNotNull(oldPassword);
                 newPassword = null;
                 state = State.ENTER_NEW_PASSWORD;
+                instruction.setText(R.string.enter_new_password);
                 break;
             case FINISHED:
                 return;

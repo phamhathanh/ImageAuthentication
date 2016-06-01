@@ -13,7 +13,7 @@
         android:layout_marginBottom="8dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/instruction"
-        android:text="@string/enter_new_password"/>
+        android:text="@string/enter_old_password"/>
 
     <fragment
         android:name="com.authpro.imageauthentication.InputFragment"
@@ -38,4 +38,15 @@
         android:layout_marginBottom="8dp"
         android:text="@string/clear"
         android:onClick="clear"/>
+
+    <TextView
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:clickable="true"
+        android:onClick="refresh"
+        android:text="@string/refresh"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 </LinearLayout>
