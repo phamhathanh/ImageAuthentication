@@ -113,17 +113,20 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                 toast.show();
                 finish();
                 break;
+            case UNAUTHORIZED:
+                // Wrong password.
+                showErrorDialog("Wrong password.");
+                break;
             default:
-                showErrorDialog(status.getCode());
+                showErrorDialog("An error with the connection has occurred. Error code:" + status.getCode());
         }
     }
 
-    private void showErrorDialog(int errorCode)
+    private void showErrorDialog(String message)
     {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
-        errorDialog.setTitle("Connection error");
-        errorDialog.setMessage("An error with the connection has occurred. Error code:" +
-                errorCode);
+        errorDialog.setTitle("Error");
+        errorDialog.setMessage(message);
         errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)
