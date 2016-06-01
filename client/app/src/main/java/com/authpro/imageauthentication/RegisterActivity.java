@@ -9,6 +9,8 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.DragEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SoundEffectConstants;
 import android.view.View;
@@ -43,160 +45,44 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
     private State state = State.ENTER_PASSWORD;
     private String password;
 
-    private final int alphabetCount = 30;
-
-    private ArrayList<Integer> input = new ArrayList<>();
-    private TextView textView;
-
+    private InputFragment input;
+    private TextView registerInstruction;
     private Toast toast;
-
-    private View initialButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_password);
+        setContentView(R.layout.activity_register);
 
-        this.textView = (EditText)findViewById(R.id.textView);
-        setupButtons();
-
+        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
+        this.registerInstruction = (TextView)findViewById(R.id.registerInstruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     }
 
-    private void setupButtons()
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
     {
-        final Resources resources = getResources();
+        getMenuInflater().inflate(R.menu.menu_register, menu);
+        return true;
+    }
 
-        final int columnCountResID = R.integer.gridColumnCount,
-                rowCountResID = R.integer.gridRowCount,
-                columnCount = resources.getInteger(columnCountResID),
-                rowCount = resources.getInteger(rowCountResID);
-
-        final ViewGroup gridLayout = (ViewGroup) findViewById(R.id.rows);
-        final int realRowCount = gridLayout.getChildCount();
-        assertEquals(realRowCount, rowCount);
-
-        TypedArray images = resources.obtainTypedArray(R.array.images);
-
-        for (int i = 0; i < rowCount; i++)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
         {
-            final View child = gridLayout.getChildAt(i);
-            assertTrue(child instanceof LinearLayout);
-            LinearLayout row = (LinearLayout) child;
-
-            final int realColumnCount = row.getChildCount();
-            assertEquals(realColumnCount, columnCount);
-            assertEquals(rowCount * columnCount, alphabetCount);
-
-            for (int j = 0; j < columnCount; j++)
-            {
-                final View cell = row.getChildAt(j);
-                assertTrue(cell instanceof ImageButton);
-                final ImageButton imageButton = (ImageButton) cell;
-
-                final int index = i * columnCount + j,
-                        imageID = images.getResourceId(index, 0);
-                if (imageID == 0)
-                    throw new IndexOutOfBoundsException("Index is outside of resources array " +
-                            "range.");
-                imageButton.setTag(index);
-                imageButton.setImageResource(imageID);
-
-                setupForDragEvent(cell);
-            }
+            case R.id.refresh:
+                // TODO: Refresh.
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void setupForDragEvent(View view)
-    {
-        view.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                assertTrue(v instanceof ImageButton);
-
-                int action = event.getAction() & MotionEvent.ACTION_MASK;
-                switch (action)
-                {
-                    case MotionEvent.ACTION_DOWN:
-                        assertNull(initialButton);
-                        // TODO: Fix the bug when this is not null sometimes.
-                        initialButton = v;
-                        View.DragShadowBuilder shadow = new View.DragShadowBuilder();
-                        v.startDrag(null, shadow, null, 0);
-                        v.setPressed(true);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        break;
-                }
-
-                return true;
-            }
-        });
-
-        view.setOnDragListener(new View.OnDragListener()
-        {
-            @Override
-            public boolean onDrag(View v, DragEvent event)
-            {
-
-                int action = event.getAction();
-                switch (action)
-                {
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        if (v != initialButton)
-                            v.setPressed(true);
-                        break;
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        if (v != initialButton)
-                            v.setPressed(false);
-                        break;
-                    case DragEvent.ACTION_DROP:
-                        assertNotNull(initialButton);
-
-                        int firstIndex = (int)initialButton.getTag(),
-                                secondIndex = (int)v.getTag();
-                        addInput(firstIndex, secondIndex);
-
-                        v.setPressed(false);
-                        v.playSoundEffect(SoundEffectConstants.CLICK);
-                        break;
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        if (v == initialButton)
-                        {
-                            initialButton.setPressed(false);
-                            initialButton = null;
-                        }
-                        break;
-                }
-
-                return true;
-            }
-        });
-    }
-
-    private void addInput(int firstIndex, int secondIndex)
-    {
-        int index = firstIndex * alphabetCount + secondIndex;
-        input.add(index);
-
-        textView.append("*");
-        assertEquals(textView.length(), input.size());
     }
 
     public void clear(View view)
     {
-        clear();
-    }
-
-    private void clear()
-    {
-        input = new ArrayList<>();
-        textView.setText("");
+        input.clear();
     }
 
     public void enter(View view)
@@ -204,11 +90,12 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
         switch (state)
         {
             case ENTER_PASSWORD:
-                password = getInputString();
-                state = State.ENTER_PASSWORD;
+                password = input.getInputString();
+                state = State.CONFIRM_PASSWORD;
+                registerInstruction.setText(R.string.confirm_password);
                 break;
             case CONFIRM_PASSWORD:
-                String passwordConfirm = getInputString();
+                String passwordConfirm = input.getInputString();
                 boolean matches = passwordConfirm.equals(password);
                 if (!matches)
                 {
@@ -219,13 +106,34 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
                 else
                     register();
                 state = State.FINISHED;
+                // TODO: Loading screen and disable input.
                 break;
             case FINISHED:
                 return;
             default:
                 throw new IllegalStateException();
         }
-        clear();
+        input.clear();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        switch (state)
+        {
+            case ENTER_PASSWORD:
+                super.onBackPressed();
+                return;
+            case CONFIRM_PASSWORD:
+                input.clear();
+                state = State.ENTER_PASSWORD;
+                registerInstruction.setText(R.string.enter_new_password);
+                break;
+            case FINISHED:
+                return;
+            default:
+                throw new IllegalStateException();
+        }
     }
 
     private void register()
@@ -284,14 +192,6 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
             }
         });
         errorDialog.show();
-    }
-
-    private String getInputString()
-    {
-        StringBuilder output = new StringBuilder();
-        for (Integer item : this.input)
-            output.append(item).append("_");
-        return output.toString();
     }
 }
 

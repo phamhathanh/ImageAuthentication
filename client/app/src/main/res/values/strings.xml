@@ -3,7 +3,13 @@
     <string name="login_title">Enter password</string>
     <string name="login">Log in</string>
     <string name="set_password">Set password</string>
+
     <string name="enter">ENTER</string>
     <string name="clear">CLEAR</string>
+
     <string name="refresh">Some pictures are missing?</string>
+
+    <string name="enter_old_password">Enter old password</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="confirm_password">Confirm password</string>
 </resources>

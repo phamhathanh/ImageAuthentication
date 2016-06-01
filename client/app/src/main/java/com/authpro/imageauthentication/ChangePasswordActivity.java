@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 import static junit.framework.Assert.*;
 
@@ -50,7 +49,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_password);
+        setContentView(R.layout.activity_login);
 
         this.textView = (EditText)findViewById(R.id.textView);
         setupButtons();

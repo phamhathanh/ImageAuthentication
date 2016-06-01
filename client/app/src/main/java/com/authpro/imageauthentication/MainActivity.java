@@ -17,7 +17,7 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().setIcon(R.drawable.icon_menu);
+        getActionBar().setIcon(R.drawable.ic_menu_white_48dp);
     }
 
     public void logIn(View view)

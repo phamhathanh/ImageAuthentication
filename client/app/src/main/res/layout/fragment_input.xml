@@ -83,5 +83,5 @@
         android:singleLine="true"
         android:text=""
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>

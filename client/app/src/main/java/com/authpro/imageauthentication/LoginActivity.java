@@ -4,24 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.DragEvent;
-import android.view.MotionEvent;
-import android.view.SoundEffectConstants;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-
-import static junit.framework.Assert.*;
 
 public class LoginActivity extends Activity implements ICallbackable<HttpResult>
 {
@@ -32,7 +18,7 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enter_password);
+        setContentView(R.layout.activity_login);
 
         this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -41,10 +27,6 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
     public void clear(View view)
     {
         input.clear();
-
-        toast.setText("Cleared.");
-        toast.show();
-        // Somehow this line is necessary for the TextView to update
     }
 
     public void enter(View view)
