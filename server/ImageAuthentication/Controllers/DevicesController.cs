@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ImageAuthentication.Models;
 using System.Text;
+using System.Net.Http.Headers;
 
 namespace ImageAuthentication.Controllers
 {
@@ -25,15 +26,17 @@ namespace ImageAuthentication.Controllers
             if (!DeviceExists(deviceID))
                 return NotFound();
 
-            var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
+            // Should be Unauthorized.
 
             var images = db.Images.AsEnumerable();
             var randomImages = images.OrderBy(r => random.Next()).Take(16).ToArray();
             var base64strings = randomImages.Select(image => image.Base64String);
             var content = base64strings.Aggregate((s1, s2) => s1 + '\n' + s2);
             response.Content = new StringContent(content);
+            // Adding a non-empty content cause two responses to be returned for some reason.
 
-            string realm = "Image Authentication",
+            string realm = "My Realm",
                 qop = "auth",
                 nonce = GenerateNonce();
 
@@ -43,7 +46,7 @@ namespace ImageAuthentication.Controllers
             var opaque = Convert.ToBase64String(idsByteArray);
 
             var header = $"Digest realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\",opaque=\"{opaque}\"";
-            response.Headers.Add("WWW-Authenticate", header);
+            response.Headers.Add("Image-Authenticate", header);
 
             return ResponseMessage(response);
         }

@@ -27,8 +27,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
 
     private String oldPassword, newPassword;
 
-    private final int alphabetCount = 30;
-
     private InputFragment input;
     private TextView instruction;
     private Toast toast;

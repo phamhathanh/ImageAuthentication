@@ -9,15 +9,14 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
+import static junit.framework.Assert.*;
+
 public class MainActivity extends Activity implements ICallbackable<HttpResult>
 {
-    private static final int REGISTER_REQUEST_CODE = 1;
-
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().setIcon(R.drawable.ic_menu_white_48dp);
     }
 
     public void logIn(View view)
@@ -40,26 +39,26 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
     @Override
     public void callback(HttpResult result)
     {
-        Intent intent;
+        if (result.getStatus() == null)
+        {
+            showErrorDialog(result.getContent());
+            return;
+        }
 
         switch (result.getStatus())
         {
             case OK:
-                String content = result.getContent();
-                if (content.equals("true"))
-                {
-                    // Device registered, verify password.
-                    intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                else if (content.equals("false"))
-                {
-                    // Device unregistered, registering...
-                    intent = new Intent(this, RegisterActivity.class);
-                    startActivityForResult(intent, REGISTER_REQUEST_CODE);
-                }
-                else
-                    throw new RuntimeException("API content error.");
+                // Should be Unauthorized.
+                // Device registered, ask for password.
+                Intent intent = new Intent(this, LoginActivity.class);
+                String data = result.getContent();
+                intent.putExtra("images", data);
+                startActivity(intent);
+                break;
+            case NOT_FOUND:
+                // Device unregistered, registering...
+                intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
                 break;
             default:
                 showErrorDialog(result.getStatus().getCode());
@@ -68,9 +67,14 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
 
     private void showErrorDialog(int errorCode)
     {
+        showErrorDialog("An error with the connection has occurred. Error code:" + errorCode);
+    }
+
+    private void showErrorDialog(String message)
+    {
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
         errorDialog.setTitle("Connection error");
-        errorDialog.setMessage("An error with the connection has occurred. Error code:" + errorCode);
+        errorDialog.setMessage(message);
         errorDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int which)
@@ -80,25 +84,5 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
             }
         });
         errorDialog.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == REGISTER_REQUEST_CODE)
-        {
-            switch (resultCode)
-            {
-                case RESULT_OK:
-                    // TODO: To new Activity.
-                    Log.d("TAG", "success");
-                    break;
-                case RESULT_CANCELED:
-                    // Do nothing.
-                    break;
-                default:
-                    throw new RuntimeException();
-            }
-        }
     }
 }

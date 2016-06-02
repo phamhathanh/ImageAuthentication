@@ -3,8 +3,11 @@ package com.authpro.imageauthentication;
 import android.app.Fragment;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,6 +32,8 @@ public class InputFragment extends Fragment
 
     private View initialButton = null;
 
+    private View rootView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -38,7 +43,53 @@ public class InputFragment extends Fragment
         this.textView = (EditText)view.findViewById(R.id.textView);
         setupButtons(view);
 
+        // Hack.
+        this.rootView = view;
+
         return view;
+    }
+
+    public void setupImages(String data)
+    {
+        final Resources resources = getResources();
+
+        final int columnCountResID = R.integer.gridColumnCount,
+                rowCountResID = R.integer.gridRowCount,
+                columnCount = resources.getInteger(columnCountResID),
+                rowCount = resources.getInteger(rowCountResID);
+
+        final ViewGroup gridLayout = (ViewGroup)rootView.findViewById(R.id.rows);
+        final int realRowCount = gridLayout.getChildCount();
+        assertEquals(realRowCount, rowCount);
+
+        String[] base64Strings = data.split("\n");
+        for (int i = 0; i < rowCount; i++)
+        {
+            final View child = gridLayout.getChildAt(i);
+            assertTrue(child instanceof LinearLayout);
+            LinearLayout row = (LinearLayout)child;
+
+            final int realColumnCount = row.getChildCount();
+            assertEquals(realColumnCount, columnCount);
+            assertEquals(rowCount * columnCount, alphabetCount);
+
+            for (int j = 0; j < columnCount; j++)
+            {
+                final View cell = ((ViewGroup)row.getChildAt(j)).getChildAt(0);
+                assertTrue(cell instanceof ImageButton);
+                final ImageButton imageButton = (ImageButton)cell;
+
+                int index = i * columnCount + j;
+                Bitmap image = fromBase64(base64Strings[index]);
+                imageButton.setImageBitmap(image);
+            }
+        }
+    }
+
+    private Bitmap fromBase64(String base64)
+    {
+        byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     private void setupButtons(View view)

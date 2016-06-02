@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 public class HttpTask extends AsyncTask<Void, Void, HttpResult>
 {
@@ -49,11 +51,13 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
 
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
             String content = readStream(inputStream);
-            return new HttpResult(statusCode, content);
+
+            Map<String, List<String>> headers = connection.getHeaderFields();
+            return new HttpResult(statusCode, content, headers);
         }
         catch (IOException exception)
         {
-            return new HttpResult(null, "ERROR");
+            return new HttpResult(null, exception.getMessage(), null);
         }
         finally
         {

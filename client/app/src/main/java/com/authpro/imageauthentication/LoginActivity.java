@@ -20,8 +20,12 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
+
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("images");
+        input.setupImages(data);
     }
 
     public void clear(View view)

@@ -3,7 +3,6 @@ package com.authpro.imageauthentication;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
@@ -12,10 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 
 public class RegisterActivity extends Activity implements ICallbackable<HttpResult>
 {
@@ -30,7 +26,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
     private String password;
 
     private InputFragment input;
-    private TextView registerInstruction;
+    private TextView instruction;
     private Toast toast;
 
     @Override
@@ -40,7 +36,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
         setContentView(R.layout.activity_register);
 
         this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
-        this.registerInstruction = (TextView)findViewById(R.id.instruction);
+        this.instruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
     }
 
@@ -76,7 +72,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
             case ENTER_PASSWORD:
                 password = input.getInputString();
                 state = State.CONFIRM_PASSWORD;
-                registerInstruction.setText(R.string.confirm_password);
+                instruction.setText(R.string.confirm_password);
                 break;
             case CONFIRM_PASSWORD:
                 String passwordConfirm = input.getInputString();
@@ -111,7 +107,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
             case CONFIRM_PASSWORD:
                 input.clear();
                 state = State.ENTER_PASSWORD;
-                registerInstruction.setText(R.string.enter_new_password);
+                instruction.setText(R.string.enter_new_password);
                 break;
             case FINISHED:
                 return;
@@ -137,8 +133,6 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
 
     public void callback(HttpResult result)
     {
-        String content = result.getContent();
-
         HttpStatus status = result.getStatus();
         switch (status)
         {
@@ -147,9 +141,6 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
                 String message = "Device registered.";
                 toast.setText(message);
                 toast.show();
-
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
                 break;
             case FORBIDDEN:
@@ -169,9 +160,6 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
             public void onClick(DialogInterface dialog, int which)
             {
                 dialog.dismiss();
-
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
             }
         });
