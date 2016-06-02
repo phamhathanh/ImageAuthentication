@@ -2,7 +2,9 @@
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Web.Http;
+using System.Text;
 using ImageAuthentication.Models;
 
 namespace ImageAuthentication.Controllers
@@ -10,17 +12,46 @@ namespace ImageAuthentication.Controllers
     public class DevicesController : ApiController
     {
         private ImageAuthenticationContext db = new ImageAuthenticationContext();
+        private Random random = new Random();
 
         [Route("api/devices/{deviceID}")]
         [HttpGet]
-        public bool CheckExistence(long deviceID)
+        public IHttpActionResult GetDeviceSecretInformation(long deviceID)
         {
-            return DeviceExists(deviceID);
+            if (!DeviceExists(deviceID))
+                return NotFound();
+
+            var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+
+            var images = db.Images.AsEnumerable();
+            var randomImages = images.OrderBy(r => random.Next()).Take(16);
+            var base64strings = randomImages.Select(image => image.Base64String);
+            var content = base64strings.Aggregate((s1, s2) => s1 + '\n' + s2);
+            response.Content = new StringContent(content);
+
+            var header = GetHeader();
+            response.Headers.Add("WWW-Authenticate", header);
+
+            return ResponseMessage(response);
+        }
+
+        private string GetHeader()
+        {
+            string realm = "Image Authentication",
+                qop = "auth",
+                opaque = GetOpaque(),
+                nonce = "nonce";
+            return $"Digest realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\",opaque=\"{opaque}\"";
+        }
+
+        private string GetOpaque()
+        {
+            return "opaque";
         }
 
         [Route("api/devices/{deviceID}/{passwordHashString}")]
         [HttpPost]
-        public IHttpActionResult RegisterPassword(long deviceID, string passwordHashString)
+        public IHttpActionResult Register(long deviceID, string passwordHashString)
         {
             var passwordHash = ValidateAndConvert(passwordHashString);
 
@@ -36,8 +67,7 @@ namespace ImageAuthentication.Controllers
 
             db.Devices.Add(newDevice);
             db.SaveChanges();
-            return Created<Device>("", null);
-            // Not sure how to return 201.
+            return Created<Device>($"api/devices/{deviceID}", null);
         }
 
         private bool DeviceExists(long deviceID)
