@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Text;
 using ImageAuthentication.Models;
+using System.Text;
 
 namespace ImageAuthentication.Controllers
 {
     public class DevicesController : ApiController
     {
         private ImageAuthenticationContext db = new ImageAuthenticationContext();
+
         private Random random = new Random();
+        private Dictionary<string, DateTime> expirations = new Dictionary<string, DateTime>();
 
         [Route("api/devices/{deviceID}")]
         [HttpGet]
@@ -24,29 +28,52 @@ namespace ImageAuthentication.Controllers
             var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
             var images = db.Images.AsEnumerable();
-            var randomImages = images.OrderBy(r => random.Next()).Take(16);
+            var randomImages = images.OrderBy(r => random.Next()).Take(16).ToArray();
             var base64strings = randomImages.Select(image => image.Base64String);
             var content = base64strings.Aggregate((s1, s2) => s1 + '\n' + s2);
             response.Content = new StringContent(content);
 
-            var header = GetHeader();
+            string realm = "Image Authentication",
+                qop = "auth",
+                nonce = GenerateNonce();
+
+            var imageIDs = randomImages.Select(image => image.ID.ToString());
+            var idsString = imageIDs.Aggregate((id1, id2) => id1 + '_' + id2);
+            var idsByteArray = Encoding.UTF8.GetBytes(idsString);
+            var opaque = Convert.ToBase64String(idsByteArray);
+
+            var header = $"Digest realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\",opaque=\"{opaque}\"";
             response.Headers.Add("WWW-Authenticate", header);
 
             return ResponseMessage(response);
         }
 
-        private string GetHeader()
+        private string GenerateNonce()
         {
-            string realm = "Image Authentication",
-                qop = "auth",
-                opaque = GetOpaque(),
-                nonce = "nonce";
-            return $"Digest realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\",opaque=\"{opaque}\"";
+            if (expirations.Count > 100)
+                CleanUp();
+
+            string nonce = Guid.NewGuid().ToString("N");
+            /* A GUID is a 128-bit integer (16 bytes) that can be used across all computers and networks wherever
+             * a unique identifier is required. Such an identifier has a very low probability of being duplicated.
+             */
+
+            var durationByHours = 3;
+            expirations.Add(nonce, DateTime.Now.AddHours(durationByHours));
+
+            return nonce;
         }
 
-        private string GetOpaque()
+        private void CleanUp()
         {
-            return "opaque";
+            var allNonces = expirations.Keys.Select(nonce => (string)nonce.Clone()).ToArray();
+            foreach (var nonce in allNonces)
+            {
+                Debug.Assert(expirations.ContainsKey(nonce));
+                var expirationTime = expirations[nonce];
+                if (expirations[nonce] > DateTime.Now)
+                    expirations.Remove(nonce);
+            }
         }
 
         [Route("api/devices/{deviceID}/{passwordHashString}")]
