@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +52,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
         switch (item.getItemId())
         {
             case R.id.refresh:
-                // TODO: Refresh.
+                input.fetchImages();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -83,8 +82,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
                     toast.show();
                     return;
                 }
-                else
-                    register();
+                register(password);
                 state = State.FINISHED;
                 // TODO: Loading screen and disable input.
                 break;
@@ -116,18 +114,15 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
         }
     }
 
-    private void register()
+    private void register(String password)
     {
-        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        long deviceID = Long.parseLong(deviceIDString, 16);
-
         assertNotNull(password);
-        String passwordHash = Utils.computeHash(password, deviceID);
 
-        HttpTask.Method method = HttpTask.Method.POST;
-        String url = Config.API_URL + deviceID + "/" + passwordHash;
+        HttpTask.Method method = HttpTask.Method.PUT;
+        String url = Config.API_URL + Utils.deviceURI(this);
 
-        HttpTask task = new HttpTask(this, method, url);
+        String header = null;
+        HttpTask task = new HttpTask(this, method, url, header, password);
         task.execute();
     }
 

@@ -2,6 +2,7 @@ package com.authpro.imageauthentication;
 
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DataFormatException;
 
 public class HttpResult
 {
@@ -33,8 +34,11 @@ public class HttpResult
         return content;
     }
 
-    public List<String> getHeader(String name)
+    public String getHeader(String name)
     {
-        return headers.get(name);
+        List<String> hits = headers.get(name);
+        if (hits.size() != 1)
+            throw new RuntimeException("Wrong header format.");
+        return hits.get(0);
     }
 }

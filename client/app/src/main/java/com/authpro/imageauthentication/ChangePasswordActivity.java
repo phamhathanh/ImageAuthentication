@@ -91,7 +91,7 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
                 newPasswordHash = Utils.computeHash(newPassword, deviceID);
 
         HttpTask.Method method = HttpTask.Method.PUT;
-        String url = Config.API_URL + deviceID + "/" + oldPasswordHash + "/" + newPasswordHash;
+        String url = Config.API_URL + Utils.deviceURI(this);
 
         HttpTask task = new HttpTask(this, method, url);
         task.execute();

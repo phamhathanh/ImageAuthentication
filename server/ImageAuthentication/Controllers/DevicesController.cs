@@ -8,52 +8,77 @@ using System.Net.Http;
 using System.Web.Http;
 using ImageAuthentication.Models;
 using System.Text;
-using System.Net.Http.Headers;
+using System.Security.Cryptography;
 
 namespace ImageAuthentication.Controllers
 {
     public class DevicesController : ApiController
     {
+        private const int NONCE_DURATION = 3;   // Hours.
+
         private ImageAuthenticationContext db = new ImageAuthenticationContext();
 
         private Random random = new Random();
-        private Dictionary<string, DateTime> expirations = new Dictionary<string, DateTime>();
 
-        [Route("api/devices/{deviceID}")]
-        [HttpGet]
-        public IHttpActionResult GetDeviceSecretInformation(long deviceID)
+        private class NonceInfo
         {
-            if (!DeviceExists(deviceID))
-                return NotFound();
+            public DateTime ExpiryTime { get; } = DateTime.Now.AddHours(NONCE_DURATION);
+            public int NC { get; set; }
+        }
+        private Dictionary<string, NonceInfo> nonces = new Dictionary<string, NonceInfo>();
 
-            var response = new HttpResponseMessage(HttpStatusCode.OK);
-            // Should be Unauthorized.
-
+        [HttpGet]
+        [Route("api/images")]
+        public IHttpActionResult GetImages()
+        {
             var images = db.Images.AsEnumerable();
-            var randomImages = images.OrderBy(r => random.Next()).Take(16).ToArray();
+            var randomImages = images.OrderBy(r => random.Next()).ToArray();
+            if (randomImages.Length != 30)
+                throw new DataException("Wrong number of images in database.");
             var base64strings = randomImages.Select(image => image.Base64String);
             var content = base64strings.Aggregate((s1, s2) => s1 + '\n' + s2);
-            response.Content = new StringContent(content);
-            // Adding a non-empty content cause two responses to be returned for some reason.
+
+            var response = new HttpResponseMessage()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(content)
+            };
+
+            return ResponseMessage(response);
+        }
+
+        [HttpGet]
+        [Route("api/devices/{deviceID}")]
+        public IHttpActionResult GetDeviceResource(long deviceID)
+        {
+            bool deviceExists = db.Devices.Count(e => e.DeviceID == deviceID) > 0;
+            if (!deviceExists)
+                return NotFound();
+
+            bool authorizationProvided = Request.Headers.Contains("Authorization");
+            if (!authorizationProvided)
+                return Unauthorized();
+            
+            return Verify(deviceID);
+        }
+
+        private IHttpActionResult Unauthorized()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
             string realm = "My Realm",
                 qop = "auth",
                 nonce = GenerateNonce();
 
-            var imageIDs = randomImages.Select(image => image.ID.ToString());
-            var idsString = imageIDs.Aggregate((id1, id2) => id1 + '_' + id2);
-            var idsByteArray = Encoding.UTF8.GetBytes(idsString);
-            var opaque = Convert.ToBase64String(idsByteArray);
-
-            var header = $"Digest realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\",opaque=\"{opaque}\"";
-            response.Headers.Add("Image-Authenticate", header);
+            var header = $"iAuth realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\"";
+            response.Headers.Add("WWW-Authenticate", header);
 
             return ResponseMessage(response);
         }
 
         private string GenerateNonce()
         {
-            if (expirations.Count > 100)
+            if (nonces.Count > 100)
                 CleanUp();
 
             string nonce = Guid.NewGuid().ToString("N");
@@ -61,68 +86,59 @@ namespace ImageAuthentication.Controllers
              * a unique identifier is required. Such an identifier has a very low probability of being duplicated.
              */
 
-            var durationByHours = 3;
-            expirations.Add(nonce, DateTime.Now.AddHours(durationByHours));
-
+            nonces.Add(nonce, new NonceInfo());
             return nonce;
         }
 
         private void CleanUp()
         {
-            var allNonces = expirations.Keys.Select(nonce => (string)nonce.Clone()).ToArray();
+            var allNonces = nonces.Keys.Select(nonce => (string)nonce.Clone()).ToArray();
             foreach (var nonce in allNonces)
             {
-                Debug.Assert(expirations.ContainsKey(nonce));
-                var expirationTime = expirations[nonce];
-                if (expirations[nonce] > DateTime.Now)
-                    expirations.Remove(nonce);
+                Debug.Assert(nonces.ContainsKey(nonce));
+                var info = nonces[nonce];
+                if (info.ExpiryTime > DateTime.Now)
+                    nonces.Remove(nonce);
             }
         }
 
-        [Route("api/devices/{deviceID}/{passwordHashString}")]
-        [HttpPost]
-        public IHttpActionResult Register(long deviceID, string passwordHashString)
+        private IHttpActionResult Verify(long deviceID)
         {
-            var passwordHash = ValidateAndConvert(passwordHashString);
-
-            bool deviceExists = DeviceExists(deviceID);
-            if (deviceExists)
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-
-            var newDevice = new Device()
-            {
-                DeviceID = deviceID,
-                PasswordHash = passwordHash
-            };
-
-            db.Devices.Add(newDevice);
-            db.SaveChanges();
-            return Created<Device>($"api/devices/{deviceID}", null);
+            if (!IsAuthorized(deviceID))
+                return Unauthorized();
+            return Ok();
         }
 
-        private bool DeviceExists(long deviceID)
+        private bool IsAuthorized(long deviceID)
         {
-            return db.Devices.Count(e => e.DeviceID == deviceID) > 0;
-        }
-
-        [Route("api/devices/{deviceID}/{passwordHashString}")]
-        [HttpGet]
-        public bool VerifyPassword(long deviceID, string passwordHashString)
-        {
-            var passwordHash = ValidateAndConvert(passwordHashString);
             var device = GetDevice(deviceID);
-            return PasswordIsCorrect(device, passwordHash);
-        }
+            var authInfo = GetAuthenticationInfo();
 
-        private byte[] ValidateAndConvert(string hashString)
-        {
-            if (hashString.Length != 64)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            var nonce = authInfo.Nonce;
+            var nonceInfo = nonces[nonce];
+            if (nonceInfo == null || nonceInfo.ExpiryTime > DateTime.Now)
+                return false;
+            var nc = authInfo.NC;
+            if (nc <= nonceInfo.NC)
+                return false;
+            nonceInfo.NC = nc;
 
-            return Enumerable.Range(0, hashString.Length)
-                     .Where(x => x % 2 == 0)
-                     .Select(x => Convert.ToByte(hashString.Substring(x, 2), 16))
-                     .ToArray();
+            var realm = authInfo.Realm;
+            var password = device.PasswordHash;
+            var ha1 = ComputeHashString($"{deviceID}:{realm}:{password}");
+
+            var method = Request.Method.ToString();
+            var uri = Request.RequestUri.LocalPath;
+            Console.WriteLine(uri);
+            if (authInfo.URI != uri)
+                return false;
+            var ha2 = ComputeHashString($"{method}:{uri}");
+
+            var cnonce = authInfo.CNonce;
+            var qop = authInfo.QOP;
+            var ha3 = ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
+
+            return authInfo.Response == ha3;
         }
 
         private Device GetDevice(long deviceID)
@@ -141,30 +157,113 @@ namespace ImageAuthentication.Controllers
             return hits.First();
         }
 
-        private bool PasswordIsCorrect(Device device, byte[] passwordHash)
+        private AuthInfo GetAuthenticationInfo()
         {
-            var correctHash = device.PasswordHash;
+            var hits = Request.Headers.GetValues("Authentication");
+            bool exists = hits.Count() != 0;
+            if (!exists)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            if (hits.Count() != 1)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            for (int i = 0; i < 32; i++)
-                if (correctHash[i] != passwordHash[i])
-                    return false;
+            string authHeader = hits.First();
+            if (authHeader == null || !authHeader.StartsWith("iAuth"))
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            return true;
+            var paramsString = authHeader.Substring("iAuth ".Length);
+            var rawParams = paramsString.Split(',');
+
+            var realm = GetStringParam("realm", rawParams[0]);
+            var nonce = GetStringParam("nonce", rawParams[1]);
+            var uri = GetStringParam("uri", rawParams[2]);
+            var qop = GetStringParam("qop", rawParams[3]);
+            var nc = GetUnsignedParam("nc", rawParams[4]);
+            var cnonce = GetStringParam("cnonce", rawParams[5]);
+            var response = GetStringParam("response", rawParams[6]);
+
+            return new AuthInfo(realm, nonce, uri, qop, nc, cnonce, response);
         }
 
-        [Route("api/devices/{deviceID}/{oldPassword}/{newPassword}")]
-        [HttpPut]
-        public IHttpActionResult SetPassword(long deviceID, string oldPassword, string newPassword)
+        private string GetStringParam(string paramName, string rawParam)
         {
-            var oldHash = ValidateAndConvert(oldPassword);
-            var newHash = ValidateAndConvert(newPassword);
+            string quoted = ExtractParam(paramName, rawParam);
+            return quoted.Substring(1, quoted.Length - 2);
+        }
+
+        private string ExtractParam(string paramName, string rawParam)
+        {
+            if (rawParam == null || !rawParam.StartsWith(paramName))
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            return rawParam.Substring(paramName.Length);
+        }
+
+        private int GetUnsignedParam(string paramName, string rawParam)
+        {
+            string unparsed = ExtractParam(paramName, rawParam);
+            int output;
+            bool isValid = int.TryParse(unparsed, out output);
+            if (!isValid || output <= 0)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            return output;
+        }
+
+        private string ComputeHashString(string text)
+        {
+            var hash = ComputeHash(text);
+            return BitConverter.ToString(hash).Replace("-", string.Empty);
+        }
+
+        private byte[] ComputeHash(string text)
+        {
+            SHA256Managed hasher = new SHA256Managed();
+            var bytes = Encoding.UTF8.GetBytes(text);
+            var hash = hasher.ComputeHash(bytes, 0, bytes.Length);
+            return hash;
+        }
+
+        [Route("api/devices/{deviceID}")]
+        [HttpPut]
+        public IHttpActionResult SetPassword(long deviceID)
+        {
+            bool authorizationProvided = Request.Headers.Contains("Authorization");
+            if (!authorizationProvided)
+                return Register(deviceID);
+            else
+                return ChangePassword(deviceID);
+        }
+
+        private IHttpActionResult Register(long deviceID)
+        {
+            bool deviceExists = db.Devices.Count(e => e.DeviceID == deviceID) > 0;
+            if (deviceExists)
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+
+            var password = Request.Content.ToString();
+            var passwordHash = ComputeHash(password);
+            var newDevice = new Device()
+            {
+                DeviceID = deviceID,
+                PasswordHash = passwordHash
+            };
+
+            db.Devices.Add(newDevice);
+            db.SaveChanges();
+            return Created<Device>($"api/devices/{deviceID}", null);
+        }
+
+        private byte[] GetPasswordHash()
+        {
+            var password = Request.Content.ToString();
+            return ComputeHash(password);
+        }
+        
+        private IHttpActionResult ChangePassword(long deviceID)
+        {
+            if (!IsAuthorized(deviceID))
+                return Unauthorized();
+
             var device = GetDevice(deviceID);
-
-            bool oldPasswordIsCorrect = PasswordIsCorrect(device, oldHash);
-            if (!oldPasswordIsCorrect)
-                throw new HttpResponseException(HttpStatusCode.Unauthorized);
-
-            device.PasswordHash = newHash;
+            device.PasswordHash = GetPasswordHash();
             db.SaveChanges();
             return Ok();
         }
@@ -174,6 +273,28 @@ namespace ImageAuthentication.Controllers
             if (disposing)
                 db.Dispose();
             base.Dispose(disposing);
+        }
+    }
+
+    internal class AuthInfo
+    {
+        public string Realm { get; }
+        public string Nonce { get; }
+        public string URI { get; }
+        public string QOP { get; }
+        public int NC { get; }
+        public string CNonce { get; }
+        public string Response { get; }
+
+        public AuthInfo(string realm, string nonce, string uri, string qop, int nc, string cnonce, string response)
+        {
+            Realm = realm;
+            Nonce = nonce;
+            URI = uri;
+            QOP = qop;
+            NC = nc;
+            CNonce = cnonce;
+            Response = response;
         }
     }
 }

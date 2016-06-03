@@ -5,9 +5,11 @@ import android.os.AsyncTask;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,30 +29,49 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
     private final ICallbackable<HttpResult> caller;
     private final Method method;
     private final URL url;
+    private final String header, content;
 
     public HttpTask(ICallbackable<HttpResult> caller, Method method, String urlString)
     {
         this.method = method;
         this.caller = caller;
         this.url = urlFromString(urlString);
+        this.header = null;
+        this.content = null;
+    }
+
+    public HttpTask(ICallbackable<HttpResult> caller, Method method, String urlString, String header, String content)
+    {
+        this.method = method;
+        this.caller = caller;
+        this.url = urlFromString(urlString);
+        this.header = header;
+        this.content = content;
     }
 
     @Override
     public HttpResult doInBackground(Void... params)
     {
         HttpURLConnection connection = null;
-        String methodString = this.method.name();
-
         try
         {
             connection = (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod(methodString);
+            connection.setRequestMethod(method.name());
+            if (header != null)
+                connection.setRequestProperty("Authentication", header);
+            if (content != null)
+            {
+                connection.setDoInput(true);
+                byte[] bytes = content.getBytes("UTF-8");
+                OutputStream outputStream = connection.getOutputStream();
+                outputStream.write(bytes);
+                outputStream.close();
+            }
+
             connection.connect();
 
             int statusCode = connection.getResponseCode();
-
-            InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-            String content = readStream(inputStream);
+            String content = getContent(connection);
 
             Map<String, List<String>> headers = connection.getHeaderFields();
             return new HttpResult(statusCode, content, headers);
@@ -76,6 +97,21 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
         {
             throw new RuntimeException("Wrong URL.", exception);
         }
+    }
+
+    private String getContent(HttpURLConnection connection)
+    {
+        String content;
+        try
+        {
+            InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+            content = readStream(inputStream);
+        }
+        catch (IOException exception)
+        {
+            content = null;
+        }
+        return content;
     }
 
     private String readStream(InputStream input) throws IOException

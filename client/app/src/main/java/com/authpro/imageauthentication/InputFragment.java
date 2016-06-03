@@ -2,12 +2,12 @@ package com.authpro.imageauthentication;
 
 import android.app.Fragment;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Base64;
+import android.util.Pair;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,16 +23,18 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.*;
 
-public class InputFragment extends Fragment
+public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 {
-    private final int alphabetCount = 16;
+    private final int alphabetCount = 30;
+    private int rowCount, columnCount;
 
-    private ArrayList<Integer> input = new ArrayList<>();
+    private ArrayList<Pair<Integer, Integer>> input = new ArrayList<>();
     private TextView textView;
 
     private View initialButton = null;
 
-    private View rootView;
+    private ImageButton[][] imageButtons;
+    private String[] imageHashes;
 
     @Nullable
     @Override
@@ -41,72 +43,32 @@ public class InputFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_input, container, true);
 
         this.textView = (EditText)view.findViewById(R.id.textView);
-        setupButtons(view);
 
-        // Hack.
-        this.rootView = view;
+        getDimensions();
+        setupButtons(view);
+        fetchImages();
 
         return view;
     }
 
-    public void setupImages(String data)
+    private void getDimensions()
     {
-        final Resources resources = getResources();
+        Resources resources = getResources();
 
-        final int columnCountResID = R.integer.gridColumnCount,
-                rowCountResID = R.integer.gridRowCount,
-                columnCount = resources.getInteger(columnCountResID),
-                rowCount = resources.getInteger(rowCountResID);
-
-        final ViewGroup gridLayout = (ViewGroup)rootView.findViewById(R.id.rows);
-        final int realRowCount = gridLayout.getChildCount();
-        assertEquals(realRowCount, rowCount);
-
-        String[] base64Strings = data.split("\n");
-        for (int i = 0; i < rowCount; i++)
-        {
-            final View child = gridLayout.getChildAt(i);
-            assertTrue(child instanceof LinearLayout);
-            LinearLayout row = (LinearLayout)child;
-
-            final int realColumnCount = row.getChildCount();
-            assertEquals(realColumnCount, columnCount);
-            assertEquals(rowCount * columnCount, alphabetCount);
-
-            for (int j = 0; j < columnCount; j++)
-            {
-                final View cell = ((ViewGroup)row.getChildAt(j)).getChildAt(0);
-                assertTrue(cell instanceof ImageButton);
-                final ImageButton imageButton = (ImageButton)cell;
-
-                int index = i * columnCount + j;
-                Bitmap image = fromBase64(base64Strings[index]);
-                imageButton.setImageBitmap(image);
-            }
-        }
-    }
-
-    private Bitmap fromBase64(String base64)
-    {
-        byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        int columnCountResID = R.integer.gridColumnCount,
+            rowCountResID = R.integer.gridRowCount;
+        this.columnCount = resources.getInteger(columnCountResID);
+        this.rowCount = resources.getInteger(rowCountResID);
+        assertEquals(rowCount * columnCount, alphabetCount);
     }
 
     private void setupButtons(View view)
     {
-        final Resources resources = getResources();
-
-        final int columnCountResID = R.integer.gridColumnCount,
-                rowCountResID = R.integer.gridRowCount,
-                columnCount = resources.getInteger(columnCountResID),
-                rowCount = resources.getInteger(rowCountResID);
-
         final ViewGroup gridLayout = (ViewGroup)view.findViewById(R.id.rows);
         final int realRowCount = gridLayout.getChildCount();
         assertEquals(realRowCount, rowCount);
 
-        TypedArray images = resources.obtainTypedArray(R.array.images);
-
+        this.imageButtons = new ImageButton[rowCount][columnCount];
         for (int i = 0; i < rowCount; i++)
         {
             final View child = gridLayout.getChildAt(i);
@@ -115,7 +77,6 @@ public class InputFragment extends Fragment
 
             final int realColumnCount = row.getChildCount();
             assertEquals(realColumnCount, columnCount);
-            assertEquals(rowCount * columnCount, alphabetCount);
 
             for (int j = 0; j < columnCount; j++)
             {
@@ -123,13 +84,10 @@ public class InputFragment extends Fragment
                 assertTrue(cell instanceof ImageButton);
                 final ImageButton imageButton = (ImageButton)cell;
 
-                final int index = i * columnCount + j,
-                        imageID = images.getResourceId(index, 0);
-                if (imageID == 0)
-                    throw new IndexOutOfBoundsException("Index is outside of resources array range.");
+                final int index = i * columnCount + j;
                 imageButton.setTag(index);
-                imageButton.setImageResource(imageID);
 
+                imageButtons[i][j] = imageButton;
                 setupForDragEvent(cell);
             }
         }
@@ -208,11 +166,59 @@ public class InputFragment extends Fragment
 
     private void addInput(int firstIndex, int secondIndex)
     {
-        int index = firstIndex * alphabetCount + secondIndex;
-        input.add(index);
+        input.add(new Pair<>(firstIndex, secondIndex));
 
         textView.append("*");
         assertEquals(textView.length(), input.size());
+    }
+
+    public void fetchImages()
+    {
+        HttpTask.Method method = HttpTask.Method.GET;
+        String url = Config.API_URL + "api/images";
+
+        HttpTask task = new HttpTask(this, method, url);
+        task.execute();
+    }
+
+    public void callback(HttpResult result)
+    {
+        HttpStatus status = result.getStatus();
+        switch (status)
+        {
+            case OK:
+                String data = result.getContent();
+                setImages(data);
+                break;
+            default:
+                // Silently fail.
+        }
+    }
+
+    private void setImages(String data)
+    {
+        String[] base64Strings = data.split("\n");
+        this.imageHashes = new String[alphabetCount];
+        for (int i = 0; i < rowCount; i++)
+        {
+            for (int j = 0; j < columnCount; j++)
+            {
+                ImageButton imageButton = imageButtons[i][j];
+
+                int index = i * columnCount + j;
+                String base64 = base64Strings[index];
+                Bitmap image = fromBase64(base64);
+                imageButton.setImageBitmap(image);
+
+                imageHashes[index] = Utils.computeHash(base64);
+            }
+        }
+    }
+
+    private Bitmap fromBase64(String base64)
+    {
+        byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public void clear()
@@ -225,8 +231,13 @@ public class InputFragment extends Fragment
     // Should use char[] instead, for security reasons.
     {
         StringBuilder output = new StringBuilder();
-        for (Integer item: this.input)
-            output.append(item).append("_");
+        for (Pair<Integer, Integer> pair : this.input)
+        {
+            if (pair.first.equals(pair.second))
+                output.append(imageHashes[pair.first]).append("_");
+            else
+                output.append(imageHashes[pair.first]).append("+").append(imageHashes[pair.second]).append("_");
+        }
         return output.toString();
     }
 }

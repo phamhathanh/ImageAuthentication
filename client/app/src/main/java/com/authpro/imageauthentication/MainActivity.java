@@ -6,10 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
-
-import static junit.framework.Assert.*;
 
 public class MainActivity extends Activity implements ICallbackable<HttpResult>
 {
@@ -26,11 +23,8 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
 
     private void checkIfDeviceRegistered()
     {
-        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        long deviceID = Long.parseLong(deviceIDString, 16);
-
         HttpTask.Method method = HttpTask.Method.GET;
-        String url = Config.API_URL + deviceID;
+        String url = Config.API_URL + Utils.deviceURI(this);
 
         HttpTask task = new HttpTask(this, method, url);
         task.execute();
@@ -47,12 +41,11 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
 
         switch (result.getStatus())
         {
-            case OK:
-                // Should be Unauthorized.
+            case UNAUTHORIZED:
                 // Device registered, ask for password.
                 Intent intent = new Intent(this, LoginActivity.class);
-                String data = result.getContent();
-                intent.putExtra("images", data);
+                String header = result.getHeader("WWW-Authenticate");
+                intent.putExtra("header", header);
                 startActivity(intent);
                 break;
             case NOT_FOUND:
@@ -67,7 +60,7 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
 
     private void showErrorDialog(int errorCode)
     {
-        showErrorDialog("An error with the connection has occurred. Error code:" + errorCode);
+        showErrorDialog("An error with the connection has occurred. Error code: " + errorCode);
     }
 
     private void showErrorDialog(String message)
@@ -80,7 +73,6 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
             public void onClick(DialogInterface dialog, int which)
             {
                 dialog.dismiss();
-                finish();
             }
         });
         errorDialog.show();
