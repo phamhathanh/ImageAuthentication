@@ -47,7 +47,7 @@ public class Utils
 
     private static String generateCNonce()
     {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+        return "42c5c842278248d6829d703b1317b877";//UUID.randomUUID().toString().replaceAll("-", "");
     }
 
     public static String computeHash(String text)

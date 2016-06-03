@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ImageAuthentication.Models;
-using static ImageAuthentication.Models.Hasher;
 
 namespace ImageAuthentication.Controllers
 {
@@ -85,14 +84,18 @@ namespace ImageAuthentication.Controllers
         private string GenerateNonce()
         {
             if (nonces.Count > 100)
-                CleanUp();
+                ;// CleanUp();
 
             string nonce = Guid.NewGuid().ToString("N");
             /* A GUID is a 128-bit integer (16 bytes) that can be used across all computers and networks wherever
              * a unique identifier is required. Such an identifier has a very low probability of being duplicated.
              */
 
+            nonce = "18b4735085fd4be3950ea92df9e23bca";
+
             nonces.Add(nonce, new NonceInfo());
+
+            //Debug.Assert(false, $"{nonces.Select(x => x.Key).Aggregate((x, y) => x + " " + y)}");
             return nonce;
         }
 
@@ -103,7 +106,7 @@ namespace ImageAuthentication.Controllers
             {
                 Debug.Assert(nonces.ContainsKey(nonce));
                 var info = nonces[nonce];
-                if (info.ExpiryTime > DateTime.Now)
+                if (info.ExpiryTime < DateTime.Now)
                     nonces.Remove(nonce);
             }
         }
@@ -119,35 +122,44 @@ namespace ImageAuthentication.Controllers
         {
             var device = GetDevice(deviceID);
             var authHeader = GetAuthenticationHeader();
-            var authInfo = AuthInfo.Parse(authHeader);
+
+            AuthInfo authInfo;
+            try
+            {
+                authInfo = AuthInfo.Parse(authHeader);
+            }
+            catch (FormatException)
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
 
             var nonce = authInfo.Nonce;
+            /*
             if (!nonces.ContainsKey(nonce))
                 return false;
             var nonceInfo = nonces[nonce];
-            if (nonceInfo.ExpiryTime > DateTime.Now)
+            if (nonceInfo.ExpiryTime < DateTime.Now)
                 return false;
+                */
             var nc = authInfo.NC;
+            /*
             if (nc <= nonceInfo.NC)
                 return false;
             nonceInfo.NC = nc;
+                */
 
-            var realm = authInfo.Realm;
-            var password = device.PasswordHash;
-            var ha1 = ComputeHashString($"{deviceID}:{realm}:{password}");
+            var passwordHash = device.PasswordHash.ToHexString();
 
             var method = Request.Method.ToString();
             var uri = authInfo.URI;
-            
-            if (uri != Request.RequestUri.LocalPath)
+
+            if ("/" + uri != Request.RequestUri.LocalPath)
                 return false;
-            var ha2 = ComputeHashString($"{method}:{uri}");
 
             var cnonce = authInfo.CNonce;
             var qop = authInfo.QOP;
-            var ha3 = ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
 
-            return authInfo.Response == ha3;
+            return authInfo.Response == Hasher.ComputeCorrectResponse(method, uri, nonce, qop, nc, cnonce, passwordHash);
         }
 
         private string GetAuthenticationHeader()
@@ -206,8 +218,8 @@ namespace ImageAuthentication.Controllers
         private byte[] GetPasswordHash(long deviceID)
         {
             var password = Request.Content.ReadAsStringAsync().Result;
-            var passwordHash = ComputeHash($"{deviceID}:{REALM}:{password}");
-            Debug.Assert(ComputeHashString($"{deviceID}:{REALM}:{password}") == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
+            var passwordHash = Hasher.ComputeHash($"{deviceID}:{REALM}:{password}");
+            Debug.Assert(passwordHash.ToHexString() == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
             return passwordHash;
         }
         

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace ImageAuthentication.Models
 {
@@ -12,15 +10,9 @@ namespace ImageAuthentication.Models
         public static string ComputeCorrectResponse(string method, string uri, string nonce, string qop, int nc, string cnonce, string passwordHash)
         {
             var ha1 = passwordHash;
-            var ha2 = ComputeHashString($"{method}:{uri}");
-            var ha3 = ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
+            var ha2 = ComputeHash($"{method}:{uri}").ToHexString();
+            var ha3 = ComputeHash($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}").ToHexString();
             return ha3;
-        }
-
-        public static string ComputeHashString(string text)
-        {
-            var hash = ComputeHash(text);
-            return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
         }
 
         public static byte[] ComputeHash(string text)
@@ -30,5 +22,15 @@ namespace ImageAuthentication.Models
             var hash = hasher.ComputeHash(bytes, 0, bytes.Length);
             return hash;
         }
+
+        public static byte[] ToByteArray(this string hexString)
+        {
+            return Enumerable.Range(0, hexString.Length)
+                    .Where(x => x % 2 == 0)
+                    .Select(x => Convert.ToByte(hexString.Substring(x, 2), 16))
+                    .ToArray();
+        }
+
+        public static string ToHexString(this byte[] bytes) => BitConverter.ToString(bytes).Replace("-", "").ToLowerInvariant();
     }
 }

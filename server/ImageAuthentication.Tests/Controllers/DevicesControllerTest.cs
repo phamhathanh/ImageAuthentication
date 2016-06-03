@@ -24,10 +24,7 @@ namespace ImageAuthentication.Tests.Controllers
             long deviceID = 2152111351939131539;
 
             var passwordHex = "591501427B5F89136BDE60F418799704C3F5BB0644F8325867A2317CC535D787";
-            var passwordHash = Enumerable.Range(0, passwordHex.Length)
-                     .Where(x => x % 2 == 0)
-                     .Select(x => Convert.ToByte(passwordHex.Substring(x, 2), 16))
-                     .ToArray();
+            var passwordHash = passwordHex.ToByteArray();
             var device = new Device() { ID = 1, DeviceID = deviceID, PasswordHash = passwordHash };
             var devices = new[] { device };
             var mockDevices = new Mock<DbSet<Device>>();
@@ -60,8 +57,8 @@ namespace ImageAuthentication.Tests.Controllers
             var response = Hasher.ComputeCorrectResponse(method, uri, nonce, qop, nc, cnonce, password);
 
             var ha1 = password;
-            var ha2 = Hasher.ComputeHashString($"{method}:{uri}");
-            var ha3 = Hasher.ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
+            var ha2 = Hasher.ComputeHash($"{method}:{uri}").ToHexString();
+            var ha3 = Hasher.ComputeHash($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}").ToHexString();
 
             Assert.AreEqual("30122166df02f670d87682b661699447690a14f0cbae8d4a94ac73c5fcaa88a4", ha2);
             Assert.AreEqual("0b2bf95ac132686d7bb88ab84cd6b5fbd962275d0ff861cf37ceb616bc8b40d2", ha3);
