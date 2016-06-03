@@ -32,7 +32,8 @@ namespace ImageAuthentication.Controllers
             public DateTime ExpiryTime { get; } = DateTime.Now.AddHours(NONCE_DURATION);
             public int NC { get; set; }
         }
-        private Dictionary<string, NonceInfo> nonces = new Dictionary<string, NonceInfo>();
+        private static Dictionary<string, NonceInfo> nonces = new Dictionary<string, NonceInfo>();
+        // Looks hacky.
 
         [HttpGet]
         [Route("api/images")]
@@ -84,18 +85,14 @@ namespace ImageAuthentication.Controllers
         private string GenerateNonce()
         {
             if (nonces.Count > 100)
-                ;// CleanUp();
+                CleanUp();
 
             string nonce = Guid.NewGuid().ToString("N");
             /* A GUID is a 128-bit integer (16 bytes) that can be used across all computers and networks wherever
              * a unique identifier is required. Such an identifier has a very low probability of being duplicated.
              */
 
-            nonce = "18b4735085fd4be3950ea92df9e23bca";
-
             nonces.Add(nonce, new NonceInfo());
-
-            //Debug.Assert(false, $"{nonces.Select(x => x.Key).Aggregate((x, y) => x + " " + y)}");
             return nonce;
         }
 
@@ -134,19 +131,16 @@ namespace ImageAuthentication.Controllers
             }
 
             var nonce = authInfo.Nonce;
-            /*
             if (!nonces.ContainsKey(nonce))
                 return false;
             var nonceInfo = nonces[nonce];
             if (nonceInfo.ExpiryTime < DateTime.Now)
                 return false;
-                */
+
             var nc = authInfo.NC;
-            /*
             if (nc <= nonceInfo.NC)
                 return false;
             nonceInfo.NC = nc;
-                */
 
             var passwordHash = device.PasswordHash.ToHexString();
 

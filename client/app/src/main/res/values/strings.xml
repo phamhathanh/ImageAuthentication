@@ -7,8 +7,6 @@
     <string name="enter">ENTER</string>
     <string name="clear">CLEAR</string>
 
-    <string name="refresh">Some pictures are missing?</string>
-
     <string name="enter_old_password">Enter old password</string>
     <string name="enter_new_password">Enter new password</string>
     <string name="confirm_password">Confirm password</string>

@@ -92,6 +92,7 @@ public class LoginActivity extends Activity implements ICallbackable<HttpResult>
                 toast.show();
                 Intent intent = new Intent(this, LoggedInActivity.class);
                 startActivity(intent);
+                break;
             case UNAUTHORIZED:
                 toast.setText("Wrong password.");
                 toast.show();
