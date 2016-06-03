@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ImageAuthentication.Models;
-using static ImageAuthentication.Models.Utils;
+using static ImageAuthentication.Models.Hasher;
 
 namespace ImageAuthentication.Controllers
 {
@@ -118,7 +118,8 @@ namespace ImageAuthentication.Controllers
         private bool IsAuthorized(long deviceID)
         {
             var device = GetDevice(deviceID);
-            var authInfo = GetAuthenticationInfo();
+            var authHeader = GetAuthenticationHeader();
+            var authInfo = AuthInfo.Parse(authHeader);
 
             var nonce = authInfo.Nonce;
             if (!nonces.ContainsKey(nonce))
@@ -149,6 +150,14 @@ namespace ImageAuthentication.Controllers
             return authInfo.Response == ha3;
         }
 
+        private string GetAuthenticationHeader()
+        {
+            var hits = Request.Headers.GetValues("Authorization");
+            if (hits.Count() != 1)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            return hits.First();
+        }
+
         private Device GetDevice(long deviceID)
         {
             var hits = from device in db.Devices
@@ -165,58 +174,8 @@ namespace ImageAuthentication.Controllers
             return hits.First();
         }
 
-        private AuthInfo GetAuthenticationInfo()
-        {
-            var hits = Request.Headers.GetValues("Authorization");
-            bool exists = hits.Count() != 0;
-            if (!exists)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
-            if (hits.Count() != 1)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-
-            string authHeader = hits.First();
-            if (authHeader == null || !authHeader.StartsWith("iAuth"))
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-
-            var paramsString = authHeader.Substring("iAuth ".Length);
-            var rawParams = paramsString.Split(',');
-
-            var realm = GetStringParam("realm", rawParams[0]);
-            var nonce = GetStringParam("nonce", rawParams[1]);
-            var uri = GetStringParam("uri", rawParams[2]);
-            var qop = GetStringParam("qop", rawParams[3]);
-            var nc = GetUnsignedParam("nc", rawParams[4]);
-            var cnonce = GetStringParam("cnonce", rawParams[5]);
-            var response = GetStringParam("response", rawParams[6]);
-
-            return new AuthInfo(realm, nonce, uri, qop, nc, cnonce, response);
-        }
-
-        private string GetStringParam(string paramName, string rawParam)
-        {
-            string quoted = ExtractParam(paramName, rawParam);
-            return quoted.Substring(1, quoted.Length - 2);
-        }
-
-        private string ExtractParam(string paramName, string rawParam)
-        {
-            if (rawParam == null || !rawParam.StartsWith(paramName))
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            return rawParam.Substring(paramName.Length + 1);
-        }
-
-        private int GetUnsignedParam(string paramName, string rawParam)
-        {
-            string unparsed = ExtractParam(paramName, rawParam);
-            int output;
-            bool isValid = int.TryParse(unparsed, out output);
-            if (!isValid || output <= 0)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
-            return output;
-        }
-
-        [Route("api/devices/{deviceID}")]
         [HttpPut]
+        [Route("api/devices/{deviceID}")]
         public IHttpActionResult SetPassword(long deviceID)
         {
             bool authorizationProvided = Request.Headers.Contains("Authorization");
@@ -232,9 +191,7 @@ namespace ImageAuthentication.Controllers
             if (deviceExists)
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
 
-            var password = Request.Content.ReadAsStringAsync().Result;
-            var passwordHash = ComputeHash($"{deviceID}:{REALM}:{password}");
-            Debug.Assert(ComputeHashString($"{deviceID}:{REALM}:{password}") == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
+            var passwordHash = GetPasswordHash(deviceID);
             var newDevice = new Device()
             {
                 DeviceID = deviceID,
@@ -246,10 +203,12 @@ namespace ImageAuthentication.Controllers
             return Created<Device>($"api/devices/{deviceID}", null);
         }
 
-        private byte[] GetPasswordHash()
+        private byte[] GetPasswordHash(long deviceID)
         {
-            var password = Request.Content.ToString();
-            return ComputeHash(password);
+            var password = Request.Content.ReadAsStringAsync().Result;
+            var passwordHash = ComputeHash($"{deviceID}:{REALM}:{password}");
+            Debug.Assert(ComputeHashString($"{deviceID}:{REALM}:{password}") == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
+            return passwordHash;
         }
         
         private IHttpActionResult ChangePassword(long deviceID)
@@ -258,7 +217,7 @@ namespace ImageAuthentication.Controllers
                 return Unauthorized();
 
             var device = GetDevice(deviceID);
-            device.PasswordHash = GetPasswordHash();
+            device.PasswordHash = GetPasswordHash(deviceID);
             db.SaveChanges();
             return Ok();
         }
@@ -268,28 +227,6 @@ namespace ImageAuthentication.Controllers
             if (disposing)
                 db.Dispose();
             base.Dispose(disposing);
-        }
-    }
-
-    internal class AuthInfo
-    {
-        public string Realm { get; }
-        public string Nonce { get; }
-        public string URI { get; }
-        public string QOP { get; }
-        public int NC { get; }
-        public string CNonce { get; }
-        public string Response { get; }
-
-        public AuthInfo(string realm, string nonce, string uri, string qop, int nc, string cnonce, string response)
-        {
-            Realm = realm;
-            Nonce = nonce;
-            URI = uri;
-            QOP = qop;
-            NC = nc;
-            CNonce = cnonce;
-            Response = response;
         }
     }
 }

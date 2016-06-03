@@ -203,11 +203,12 @@
       <DependentUpon>201604131110520_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AuthInfo.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\IImageAuthenticationContext.cs" />
     <Compile Include="Models\ImageAuthenticationContext.cs" />
-    <Compile Include="Models\Utils.cs" />
+    <Compile Include="Models\Hasher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

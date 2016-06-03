@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ImageAuthentication.Models
 {
-    public static class Utils
+    public static class Hasher
     {
         public static string ComputeCorrectResponse(string method, string uri, string nonce, string qop, int nc, string cnonce, string passwordHash)
         {

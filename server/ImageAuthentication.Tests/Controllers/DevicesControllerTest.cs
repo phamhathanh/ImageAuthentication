@@ -57,11 +57,11 @@ namespace ImageAuthentication.Tests.Controllers
             var nc = 1;
             var cnonce = "42c5c842278248d6829d703b1317b877";
             var password = "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246";
-            var response = Utils.ComputeCorrectResponse(method, uri, nonce, qop, nc, cnonce, password);
+            var response = Hasher.ComputeCorrectResponse(method, uri, nonce, qop, nc, cnonce, password);
 
             var ha1 = password;
-            var ha2 = Utils.ComputeHashString($"{method}:{uri}");
-            var ha3 = Utils.ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
+            var ha2 = Hasher.ComputeHashString($"{method}:{uri}");
+            var ha3 = Hasher.ComputeHashString($"{ha1}:{nonce}:{nc}:{cnonce}:{qop}:{ha2}");
 
             Assert.AreEqual("30122166df02f670d87682b661699447690a14f0cbae8d4a94ac73c5fcaa88a4", ha2);
             Assert.AreEqual("0b2bf95ac132686d7bb88ab84cd6b5fbd962275d0ff861cf37ceb616bc8b40d2", ha3);
