@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ImageAuthentication.Models
 {
-    public class ImageAuthenticationContext : DbContext
+    public class ImageAuthenticationContext : DbContext, IImageAuthenticationContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 

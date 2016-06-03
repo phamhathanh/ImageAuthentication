@@ -7,16 +7,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ImageAuthentication.Models;
-using System.Text;
-using System.Security.Cryptography;
+using static ImageAuthentication.Models.Utils;
 
 namespace ImageAuthentication.Controllers
 {
     public class DevicesController : ApiController
     {
         private const int NONCE_DURATION = 3;   // Hours.
+        private const string REALM = "My Realm",
+                                QOP = "auth";
 
-        private ImageAuthenticationContext db = new ImageAuthenticationContext();
+        private IImageAuthenticationContext db = new ImageAuthenticationContext();
+
+        public DevicesController(){ }
+
+        public DevicesController(IImageAuthenticationContext context)
+        {
+            db = context;
+        }
 
         private Random random = new Random();
 
@@ -66,11 +74,9 @@ namespace ImageAuthentication.Controllers
         {
             var response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
 
-            string realm = "My Realm",
-                qop = "auth",
-                nonce = GenerateNonce();
+            string nonce = GenerateNonce();
 
-            var header = $"iAuth realm=\"{realm}\",qop=\"{qop}\",nonce=\"{nonce}\"";
+            var header = $"iAuth realm=\"{REALM}\",qop=\"{QOP}\",nonce=\"{nonce}\"";
             response.Headers.Add("WWW-Authenticate", header);
 
             return ResponseMessage(response);
@@ -115,8 +121,10 @@ namespace ImageAuthentication.Controllers
             var authInfo = GetAuthenticationInfo();
 
             var nonce = authInfo.Nonce;
+            if (!nonces.ContainsKey(nonce))
+                return false;
             var nonceInfo = nonces[nonce];
-            if (nonceInfo == null || nonceInfo.ExpiryTime > DateTime.Now)
+            if (nonceInfo.ExpiryTime > DateTime.Now)
                 return false;
             var nc = authInfo.NC;
             if (nc <= nonceInfo.NC)
@@ -128,9 +136,9 @@ namespace ImageAuthentication.Controllers
             var ha1 = ComputeHashString($"{deviceID}:{realm}:{password}");
 
             var method = Request.Method.ToString();
-            var uri = Request.RequestUri.LocalPath;
-            Console.WriteLine(uri);
-            if (authInfo.URI != uri)
+            var uri = authInfo.URI;
+            
+            if (uri != Request.RequestUri.LocalPath)
                 return false;
             var ha2 = ComputeHashString($"{method}:{uri}");
 
@@ -159,7 +167,7 @@ namespace ImageAuthentication.Controllers
 
         private AuthInfo GetAuthenticationInfo()
         {
-            var hits = Request.Headers.GetValues("Authentication");
+            var hits = Request.Headers.GetValues("Authorization");
             bool exists = hits.Count() != 0;
             if (!exists)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -194,7 +202,7 @@ namespace ImageAuthentication.Controllers
         {
             if (rawParam == null || !rawParam.StartsWith(paramName))
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            return rawParam.Substring(paramName.Length);
+            return rawParam.Substring(paramName.Length + 1);
         }
 
         private int GetUnsignedParam(string paramName, string rawParam)
@@ -205,20 +213,6 @@ namespace ImageAuthentication.Controllers
             if (!isValid || output <= 0)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             return output;
-        }
-
-        private string ComputeHashString(string text)
-        {
-            var hash = ComputeHash(text);
-            return BitConverter.ToString(hash).Replace("-", string.Empty);
-        }
-
-        private byte[] ComputeHash(string text)
-        {
-            SHA256Managed hasher = new SHA256Managed();
-            var bytes = Encoding.UTF8.GetBytes(text);
-            var hash = hasher.ComputeHash(bytes, 0, bytes.Length);
-            return hash;
         }
 
         [Route("api/devices/{deviceID}")]
@@ -238,8 +232,9 @@ namespace ImageAuthentication.Controllers
             if (deviceExists)
                 throw new HttpResponseException(HttpStatusCode.Forbidden);
 
-            var password = Request.Content.ToString();
-            var passwordHash = ComputeHash(password);
+            var password = Request.Content.ReadAsStringAsync().Result;
+            var passwordHash = ComputeHash($"{deviceID}:{REALM}:{password}");
+            Debug.Assert(ComputeHashString($"{deviceID}:{REALM}:{password}") == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
             var newDevice = new Device()
             {
                 DeviceID = deviceID,

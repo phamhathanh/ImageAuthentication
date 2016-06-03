@@ -2,6 +2,7 @@ package com.authpro.imageauthentication;
 
 import android.content.Context;
 import android.provider.Settings;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -32,7 +33,7 @@ public class Utils
 
         String response = computeResponse(method, path, realm, nonce, qop, nc, cNonce, deviceID, password);
 
-        String header = "iAuth "+"realm"+realm+",nonce"+nonce+",uri"+path+",qop"+qop+",nc"+nc+",cnonce"+cNonce+",response"+response;
+        String header = "iAuth "+"realm=\""+realm+"\",nonce=\""+nonce+"\",uri=\""+path+"\",qop=\""+qop+"\",nc="+nc+",cnonce=\""+cNonce+"\",response=\""+response+"\"";
         return header;
     }
 
@@ -88,7 +89,7 @@ public class Utils
     {
         if (rawParam == null || !rawParam.startsWith(paramName))
             throw new RuntimeException("Bad header.");
-        String quoted = rawParam.substring(paramName.length());
-        return quoted.substring(1, quoted.length() - 2);
+        String quoted = rawParam.substring(paramName.length() + 1);
+        return quoted.substring(1, quoted.length() - 1);
     }
 }

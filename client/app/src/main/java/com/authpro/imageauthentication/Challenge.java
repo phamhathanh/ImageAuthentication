@@ -2,13 +2,13 @@ package com.authpro.imageauthentication;
 
 public class Challenge
 {
-    private final String realm, nonce, qop;
+    private final String realm, qop, nonce;
 
-    public Challenge(String realm, String nonce, String qop)
+    public Challenge(String realm, String qop, String nonce)
     {
         this.realm = realm;
-        this.nonce = nonce;
         this.qop = qop;
+        this.nonce = nonce;
     }
 
     public String getRealm()
@@ -16,13 +16,13 @@ public class Challenge
         return realm;
     }
 
-    public String getNonce()
-    {
-        return nonce;
-    }
-
     public String getQOP()
     {
         return qop;
+    }
+
+    public String getNonce()
+    {
+        return nonce;
     }
 }

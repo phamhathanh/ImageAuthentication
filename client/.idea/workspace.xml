@@ -21,22 +21,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9aed8b9d-63e4-4eb4-a3d7-bea0b7979c6e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../server/ImageAuthentication/Models/Utils/Hasher.cs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/Controllers/HomeControllerTest.cs" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/Controllers/ValuesControllerTest.cs" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpResult.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpResult.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_input.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_input.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/consts.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/consts.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/App.config" afterPath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/App.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/ImageAuthentication.Tests.csproj" afterPath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/ImageAuthentication.Tests.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/packages.config" afterPath="$PROJECT_DIR$/../server/ImageAuthentication.Tests/packages.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication/Controllers/DevicesController.cs" afterPath="$PROJECT_DIR$/../server/ImageAuthentication/Controllers/DevicesController.cs" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication/ImageAuthentication.csproj" afterPath="$PROJECT_DIR$/../server/ImageAuthentication/ImageAuthentication.csproj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../server/ImageAuthentication/Models/ImageAuthenticationContext.cs" afterPath="$PROJECT_DIR$/../server/ImageAuthentication/Models/ImageAuthenticationContext.cs" />
     </list>
     <ignored path="client.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,6 +60,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="InputFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="177" column="43" selection-start-line="177" selection-start-column="43" selection-end-line="177" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ChangePasswordActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.58356166">
+            <state vertical-scroll-proportion="0.0">
               <caret line="60" column="21" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="21" />
               <folding>
                 <element signature="e#1572#1573#0" expanded="true" />
@@ -91,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
+              <caret line="41" column="66" selection-start-line="41" selection-start-column="66" selection-end-line="41" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,14 +107,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegisterActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
+      <file leaf-file-name="HttpTask.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.56438357">
+              <caret line="67" column="64" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="64" />
               <folding>
-                <element signature="e#1930#1955#0" expanded="true" />
-                <element signature="e#2986#3013#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1772,19 +1779,19 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/image.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ImageService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpResult.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/consts.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_input.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/ChangePasswordActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java" />
       </list>
     </option>
   </component>
@@ -2207,7 +2214,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5030257" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32935154" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32935154" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -2558,21 +2565,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9068493">
-          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
-          <folding>
-            <element signature="e#299#300#0" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#363#364#0" expanded="true" />
-            <element signature="e#391#392#0" expanded="true" />
-            <element signature="e#425#426#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Config.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2581,10 +2573,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7315068">
-          <caret line="177" column="43" selection-start-line="177" selection-start-column="43" selection-end-line="177" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.7917808">
+          <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
+          <folding>
+            <element signature="e#1930#1955#0" expanded="true" />
+            <element signature="e#2986#3013#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Challenge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18630137">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+          <folding>
+            <element signature="e#299#300#0" expanded="true" />
+            <element signature="e#327#328#0" expanded="true" />
+            <element signature="e#361#362#0" expanded="true" />
+            <element signature="e#387#388#0" expanded="true" />
+            <element signature="e#423#424#0" expanded="true" />
+            <element signature="e#451#452#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2594,17 +2612,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="22" selection-start-line="35" selection-start-column="22" selection-end-line="35" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15053764">
-          <caret line="60" column="53" selection-start-line="60" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <caret line="41" column="66" selection-start-line="41" selection-start-column="66" selection-end-line="41" selection-end-column="66" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2619,34 +2627,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/InputFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
+          <caret line="177" column="43" selection-start-line="177" selection-start-column="43" selection-end-line="177" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/RegisterActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="5" selection-start-line="39" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
-          <folding>
-            <element signature="e#1930#1955#0" expanded="true" />
-            <element signature="e#2986#3013#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.58356166">
+        <state vertical-scroll-proportion="0.0">
           <caret line="60" column="21" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="21" />
           <folding>
             <element signature="e#1572#1573#0" expanded="true" />
             <element signature="e#1601#1602#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/authpro/imageauthentication/HttpTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56438357">
+          <caret line="67" column="64" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

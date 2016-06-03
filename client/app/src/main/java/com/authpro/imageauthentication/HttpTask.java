@@ -1,8 +1,10 @@
 package com.authpro.imageauthentication;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -58,12 +60,12 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
             connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod(method.name());
             if (header != null)
-                connection.setRequestProperty("Authentication", header);
+                connection.setRequestProperty("Authorization", header);
             if (content != null)
             {
                 connection.setDoInput(true);
                 byte[] bytes = content.getBytes("UTF-8");
-                OutputStream outputStream = connection.getOutputStream();
+                OutputStream outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(bytes);
                 outputStream.close();
             }
