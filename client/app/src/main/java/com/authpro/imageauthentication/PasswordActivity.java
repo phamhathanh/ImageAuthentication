@@ -39,7 +39,7 @@ public abstract class PasswordActivity extends Activity implements ICallbackable
         switch (item.getItemId())
         {
             case R.id.refresh:
-                input.fetchImages();
+                input.shuffle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -56,6 +56,7 @@ public abstract class PasswordActivity extends Activity implements ICallbackable
         String inputString = input.getInputString();
         onEnter(inputString);
         input.clear();
+        input.shuffle();
     }
 
     protected abstract void onEnter(String input);

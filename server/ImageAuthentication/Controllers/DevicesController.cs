@@ -59,11 +59,10 @@ namespace ImageAuthentication.Controllers
         [Route("api/images")]
         public IHttpActionResult GetImages()
         {
-            var images = db.Images.AsEnumerable();
-            var randomImages = images.OrderBy(r => random.Next()).ToArray();
-            if (randomImages.Length != 30)
+            var images = db.Images.ToArray();
+            if (images.Length != 30)
                 throw new DataException("Wrong number of images in database.");
-            var base64strings = randomImages.Select(image => image.Base64String);
+            var base64strings = images.Select(image => image.Base64String);
             var content = base64strings.Aggregate((s1, s2) => s1 + '\n' + s2);
 
             var response = new HttpResponseMessage()

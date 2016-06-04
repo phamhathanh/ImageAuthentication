@@ -20,12 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static junit.framework.Assert.*;
 
 public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 {
-    private final int alphabetCount = 30;
+    private final int imageCount = 30;
     private int rowCount, columnCount;
 
     private ArrayList<Pair<Integer, Integer>> input = new ArrayList<>();
@@ -35,6 +36,8 @@ public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 
     private ImageButton[][] imageButtons;
     private String[] imageHashes;
+    private Bitmap[] images;
+    private ArrayList<Integer> permutation;
 
     @Nullable
     @Override
@@ -59,7 +62,7 @@ public class InputFragment extends Fragment implements ICallbackable<HttpResult>
             rowCountResID = R.integer.gridRowCount;
         this.columnCount = resources.getInteger(columnCountResID);
         this.rowCount = resources.getInteger(rowCountResID);
-        assertEquals(rowCount * columnCount, alphabetCount);
+        assertEquals(rowCount * columnCount, imageCount);
     }
 
     private void setupButtons(View view)
@@ -166,13 +169,13 @@ public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 
     private void addInput(int firstIndex, int secondIndex)
     {
-        input.add(new Pair<>(firstIndex, secondIndex));
+        input.add(new Pair<>(permutation.get(firstIndex), permutation.get(secondIndex)));
 
         textView.append("*");
         assertEquals(textView.length(), input.size());
     }
 
-    public void fetchImages()
+    private void fetchImages()
     {
         HttpMethod method = HttpMethod.GET;
         String url = Config.API_URL + "api/images";
@@ -197,22 +200,34 @@ public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 
     private void setImages(String data)
     {
+        images = new Bitmap[imageCount];
+        imageHashes = new String[imageCount];
+        permutation = new ArrayList<>(imageCount);
         String[] base64Strings = data.split("\n");
-        this.imageHashes = new String[alphabetCount];
         for (int i = 0; i < rowCount; i++)
-        {
+            for (int j = 0; j < columnCount; j++)
+            {
+                int index = i * columnCount + j;
+                permutation.add(index);
+                String base64 = base64Strings[index];
+                images[index] = fromBase64(base64);
+                imageHashes[index] = Utils.computeHash(base64);
+            }
+
+        shuffle();
+    }
+
+    public void shuffle()
+    {
+        Collections.shuffle(permutation);
+        for (int i = 0; i < rowCount; i++)
             for (int j = 0; j < columnCount; j++)
             {
                 ImageButton imageButton = imageButtons[i][j];
-
                 int index = i * columnCount + j;
-                String base64 = base64Strings[index];
-                Bitmap image = fromBase64(base64);
+                Bitmap image = images[permutation.get(index)];
                 imageButton.setImageBitmap(image);
-
-                imageHashes[index] = Utils.computeHash(base64);
             }
-        }
     }
 
     private Bitmap fromBase64(String base64)
