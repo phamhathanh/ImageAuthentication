@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 import static junit.framework.Assert.assertNotNull;
 
-public class RegisterActivity extends Activity implements ICallbackable<HttpResult>
+public class RegisterActivity extends PasswordActivity implements ICallbackable<HttpResult>
 {
     private enum State
     {
@@ -24,57 +25,43 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
     private State state = State.ENTER_PASSWORD;
     private String password;
 
-    private InputFragment input;
     private TextView instruction;
     private Toast toast;
+
+    private AuthenticationComponent authenticationComponent;
+
+    @Override
+    protected int getLayout()
+    {
+        return R.layout.activity_register;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
-        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
         this.instruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+
+        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        long deviceID = Long.parseLong(deviceIDString, 16);
+        HttpMethod method = HttpMethod.GET;
+        this.authenticationComponent = new AuthenticationComponent(deviceID, method);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_register, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.refresh:
-                input.fetchImages();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void clear(View view)
-    {
-        input.clear();
-    }
-
-    public void enter(View view)
+    protected void onEnter(String input)
     {
         switch (state)
         {
             case ENTER_PASSWORD:
-                password = input.getInputString();
+                password = input;
                 state = State.CONFIRM_PASSWORD;
                 instruction.setText(R.string.confirm_password);
                 break;
             case CONFIRM_PASSWORD:
-                String passwordConfirm = input.getInputString();
+                String passwordConfirm = input;
                 boolean matches = passwordConfirm.equals(password);
                 if (!matches)
                 {
@@ -91,7 +78,6 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
             default:
                 throw new IllegalStateException();
         }
-        input.clear();
     }
 
     @Override
@@ -103,7 +89,8 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
                 super.onBackPressed();
                 return;
             case CONFIRM_PASSWORD:
-                input.clear();
+                clear(null);
+                // A bit hacky.
                 state = State.ENTER_PASSWORD;
                 instruction.setText(R.string.enter_new_password);
                 break;
@@ -118,7 +105,7 @@ public class RegisterActivity extends Activity implements ICallbackable<HttpResu
     {
         assertNotNull(password);
 
-        HttpTask.Method method = HttpTask.Method.PUT;
+        HttpMethod method = HttpMethod.POST;
         String url = Config.API_URL + Utils.deviceURI(this);
 
         String header = null;

@@ -35,6 +35,26 @@ namespace ImageAuthentication.Controllers
         private static Dictionary<string, NonceInfo> nonces = new Dictionary<string, NonceInfo>();
         // Looks hacky.
 
+        [HttpPost]
+        [Route("api/devices/{deviceID}")]
+        public IHttpActionResult Register(long deviceID)
+        {
+            bool deviceExists = db.Devices.Count(e => e.DeviceID == deviceID) > 0;
+            if (deviceExists)
+                throw new HttpResponseException(HttpStatusCode.Forbidden);
+
+            var passwordHash = GetPasswordHash(deviceID);
+            var newDevice = new Device()
+            {
+                DeviceID = deviceID,
+                PasswordHash = passwordHash
+            };
+
+            db.Devices.Add(newDevice);
+            db.SaveChanges();
+            return Created<Device>($"api/devices/{deviceID}", null);
+        }
+
         [HttpGet]
         [Route("api/images")]
         public IHttpActionResult GetImages()
@@ -186,34 +206,14 @@ namespace ImageAuthentication.Controllers
         {
             bool authorizationProvided = Request.Headers.Contains("Authorization");
             if (!authorizationProvided)
-                return Register(deviceID);
-            else
-                return ChangePassword(deviceID);
-        }
-
-        private IHttpActionResult Register(long deviceID)
-        {
-            bool deviceExists = db.Devices.Count(e => e.DeviceID == deviceID) > 0;
-            if (deviceExists)
-                throw new HttpResponseException(HttpStatusCode.Forbidden);
-
-            var passwordHash = GetPasswordHash(deviceID);
-            var newDevice = new Device()
-            {
-                DeviceID = deviceID,
-                PasswordHash = passwordHash
-            };
-
-            db.Devices.Add(newDevice);
-            db.SaveChanges();
-            return Created<Device>($"api/devices/{deviceID}", null);
+                return Unauthorized();
+            return ChangePassword(deviceID);
         }
 
         private byte[] GetPasswordHash(long deviceID)
         {
             var password = Request.Content.ReadAsStringAsync().Result;
             var passwordHash = Hasher.ComputeHash($"{deviceID}:{REALM}:{password}");
-            Debug.Assert(passwordHash.ToHexString() == "d707f47716e28275daeed55a90f201fa5665213d9b21cf09980623200c12b246", password);
             return passwordHash;
         }
         

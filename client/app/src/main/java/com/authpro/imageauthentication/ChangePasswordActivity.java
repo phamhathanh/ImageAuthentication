@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +26,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     }
 
     private State state = State.ENTER_OLD_PASSWORD;
-
     private String oldPassword, newPassword;
 
     private InputFragment input;
@@ -35,11 +36,31 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change);
+        setContentView(R.layout.activity_register);
 
         this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
         this.instruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_register, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.refresh:
+                input.fetchImages();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void clear(View view)
@@ -90,8 +111,8 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         String oldPasswordHash = Utils.computeHash(oldPassword, deviceID),
                 newPasswordHash = Utils.computeHash(newPassword, deviceID);
 
-        HttpTask.Method method = HttpTask.Method.PUT;
-        String url = Config.API_URL + Utils.deviceURI(this);
+        HttpMethod method = HttpMethod.PUT;
+        String url = Config.API_URL + "api/devices/" + deviceID;
 
         HttpTask task = new HttpTask(this, method, url);
         task.execute();

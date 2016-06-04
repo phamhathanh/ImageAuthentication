@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 
 public class MainActivity extends Activity implements ICallbackable<HttpResult>
@@ -23,7 +22,7 @@ public class MainActivity extends Activity implements ICallbackable<HttpResult>
 
     private void checkIfDeviceRegistered()
     {
-        HttpTask.Method method = HttpTask.Method.GET;
+        HttpMethod method = HttpMethod.GET;
         String url = Config.API_URL + Utils.deviceURI(this);
 
         HttpTask task = new HttpTask(this, method, url);

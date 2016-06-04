@@ -2,7 +2,6 @@ package com.authpro.imageauthentication;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

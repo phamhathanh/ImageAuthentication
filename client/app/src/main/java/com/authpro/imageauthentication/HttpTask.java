@@ -1,7 +1,6 @@
 package com.authpro.imageauthentication;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -11,29 +10,18 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
 public class HttpTask extends AsyncTask<Void, Void, HttpResult>
 {
-    public enum Method
-    {
-        OPTIONS,
-        GET,
-        HEAD,
-        POST,
-        PUT,
-        DELETE,
-        TRACE
-    }
 
     private final ICallbackable<HttpResult> caller;
-    private final Method method;
+    private final HttpMethod method;
     private final URL url;
     private final String header, content;
 
-    public HttpTask(ICallbackable<HttpResult> caller, Method method, String urlString)
+    public HttpTask(ICallbackable<HttpResult> caller, HttpMethod method, String urlString)
     {
         this.method = method;
         this.caller = caller;
@@ -42,7 +30,7 @@ public class HttpTask extends AsyncTask<Void, Void, HttpResult>
         this.content = null;
     }
 
-    public HttpTask(ICallbackable<HttpResult> caller, Method method, String urlString, String header, String content)
+    public HttpTask(ICallbackable<HttpResult> caller, HttpMethod method, String urlString, String header, String content)
     {
         this.method = method;
         this.caller = caller;

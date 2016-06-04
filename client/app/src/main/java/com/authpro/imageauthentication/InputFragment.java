@@ -174,7 +174,7 @@ public class InputFragment extends Fragment implements ICallbackable<HttpResult>
 
     public void fetchImages()
     {
-        HttpTask.Method method = HttpTask.Method.GET;
+        HttpMethod method = HttpMethod.GET;
         String url = Config.API_URL + "api/images";
 
         HttpTask task = new HttpTask(this, method, url);
