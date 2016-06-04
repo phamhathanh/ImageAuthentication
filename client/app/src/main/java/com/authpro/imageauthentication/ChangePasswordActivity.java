@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import static junit.framework.Assert.*;
 
-public class ChangePasswordActivity extends Activity implements ICallbackable<HttpResult>
+public class ChangePasswordActivity extends PasswordActivity implements ICallbackable<HttpResult>
 {
     private enum State
     {
@@ -28,62 +28,47 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     private State state = State.ENTER_OLD_PASSWORD;
     private String oldPassword, newPassword;
 
-    private InputFragment input;
     private TextView instruction;
     private Toast toast;
+    private AuthenticationComponent authenticationComponent;
+
+    @Override
+    protected int getLayout()
+    {
+        return R.layout.activity_register;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
-        this.input = (InputFragment)getFragmentManager().findFragmentById(R.id.input);
         this.instruction = (TextView)findViewById(R.id.instruction);
         this.toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+
+        String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        long deviceID = Long.parseLong(deviceIDString, 16);
+        HttpMethod method = HttpMethod.PUT;
+        this.authenticationComponent = new AuthenticationComponent(deviceID, method);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu_register, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.refresh:
-                input.fetchImages();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    public void clear(View view)
-    {
-        input.clear();
-    }
-
-    public void enter(View view)
+    protected void onEnter(String input)
     {
         switch (state)
         {
             case ENTER_OLD_PASSWORD:
-                oldPassword = input.getInputString();
+                oldPassword = input;
                 state = State.ENTER_NEW_PASSWORD;
                 instruction.setText(R.string.enter_new_password);
                 break;
             case ENTER_NEW_PASSWORD:
-                newPassword = input.getInputString();
+                newPassword = input;
                 state = State.CONFIRM_NEW_PASSWORD;
                 instruction.setText(R.string.confirm_password);
                 break;
             case CONFIRM_NEW_PASSWORD:
-                String passwordConfirm = input.getInputString();
+                String passwordConfirm = input;
                 boolean matches = passwordConfirm.equals(newPassword);
                 if (!matches)
                 {
@@ -100,7 +85,6 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
             default:
                 throw new IllegalStateException();
         }
-        input.clear();
     }
 
     private void changePassword()
@@ -108,19 +92,25 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
         String deviceIDString = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         long deviceID = Long.parseLong(deviceIDString, 16);
 
-        String oldPasswordHash = Utils.computeHash(oldPassword, deviceID),
-                newPasswordHash = Utils.computeHash(newPassword, deviceID);
+        String password = oldPassword;
+        String header = authenticationComponent.buildAuthorizationHeader(password);
+
+        String content = newPassword;
 
         HttpMethod method = HttpMethod.PUT;
         String url = Config.API_URL + "api/devices/" + deviceID;
+        HttpTask task = new HttpTask(this, method, url, header, content);
 
-        HttpTask task = new HttpTask(this, method, url);
         task.execute();
     }
 
     public void callback(HttpResult result)
     {
-        String content = result.getContent();
+        if (result.getStatus() == null)
+        {
+            showErrorDialog(result.getContent());
+            return;
+        }
 
         HttpStatus status = result.getStatus();
         switch (status)
@@ -160,11 +150,11 @@ public class ChangePasswordActivity extends Activity implements ICallbackable<Ht
     @Override
     public void onBackPressed()
     {
-        input.clear();
+        clear(null);
         switch (state)
         {
             case ENTER_OLD_PASSWORD:
-                finish();
+                super.onBackPressed();
                 break;
             case ENTER_NEW_PASSWORD:
                 assertNull(newPassword);
